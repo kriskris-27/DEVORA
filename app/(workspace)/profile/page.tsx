@@ -94,19 +94,19 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 p-4 md:p-8">
+    <div className="min-h-screen bg-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
           <div>
-            <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
-            <p className="text-purple-200 mt-1">Manage your account and preferences</p>
+            <h1 className="text-3xl font-bold text-slate-800">Profile Settings</h1>
+            <p className="text-slate-600 mt-1">Manage your account and preferences</p>
           </div>
           <div className="flex space-x-3">
             {!isEditMode ? (
               <Button 
                 onClick={handleEdit}
-                className="bg-purple-600 text-white hover:bg-purple-700 rounded-full px-6"
+                className="bg-white border-2 border-purple-600 text-purple-700 hover:bg-purple-50 rounded-xl px-6 shadow-sm"
               >
                 <Edit3 className="w-4 h-4 mr-2" />
                 Edit Changes
@@ -116,13 +116,13 @@ export default function ProfilePage() {
                 <Button 
                   onClick={handleCancel}
                   variant="outline"
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-full px-6"
+                  className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl px-6"
                 >
                   Cancel
                 </Button>
                 <Button 
                   onClick={handleSave}
-                  className="bg-black text-white hover:bg-black/90 rounded-full px-6"
+                  className="bg-green-600 border-2 border-green-400 text-white hover:bg-green-700 rounded-xl px-6 shadow-sm"
                 >
                   <Save className="w-4 h-4 mr-2" />
                   Save Changes
@@ -133,32 +133,20 @@ export default function ProfilePage() {
         </div>
 
         <Tabs defaultValue="profile" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-white/10 backdrop-blur-md border border-white/10 rounded-full p-1">
-            <TabsTrigger 
-              value="profile" 
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-purple-200 rounded-full"
-            >
+          <TabsList className="grid w-full grid-cols-4 bg-white p-1 rounded-2xl border border-slate-200 shadow-sm">
+            <TabsTrigger value="profile" className="rounded-xl text-slate-600 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-500">
               <User className="w-4 h-4 mr-2" />
               Profile
             </TabsTrigger>
-            <TabsTrigger 
-              value="notifications" 
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-purple-200 rounded-full"
-            >
+            <TabsTrigger value="notifications" className="rounded-xl text-slate-600 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-500">
               <Bell className="w-4 h-4 mr-2" />
               Notifications
             </TabsTrigger>
-            <TabsTrigger 
-              value="security" 
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-purple-200 rounded-full"
-            >
+            <TabsTrigger value="security" className="rounded-xl text-slate-600 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-500">
               <Shield className="w-4 h-4 mr-2" />
               Security
             </TabsTrigger>
-            <TabsTrigger 
-              value="appearance" 
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-purple-200 rounded-full"
-            >
+            <TabsTrigger value="appearance" className="rounded-xl text-slate-600 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-500">
               <Palette className="w-4 h-4 mr-2" />
               Appearance
             </TabsTrigger>
@@ -166,15 +154,15 @@ export default function ProfilePage() {
 
           {/* Profile Tab */}
           <TabsContent value="profile" className="space-y-6">
-            <Card className="bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-3xl">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-white">Personal Information</CardTitle>
+            <Card className="bg-white rounded-2xl border border-slate-200 shadow-sm">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-2xl">
+                <CardTitle className="text-xl font-semibold text-slate-800">Personal Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 p-6">
                 {/* Avatar Section */}
                 <div className="flex items-center space-x-6">
                   <div className="relative">
-                    <Avatar className="w-24 h-24 border-4 border-white/20">
+                    <Avatar className="w-24 h-24 border-4 border-purple-200 shadow-lg">
                       <AvatarImage src={avatar} alt="Profile" />
                       <AvatarFallback className="bg-purple-600 text-white text-2xl">
                         {profileData.firstName[0]}{profileData.lastName[0]}
@@ -182,17 +170,17 @@ export default function ProfilePage() {
                     </Avatar>
                     <Button 
                       size="sm" 
-                      className="absolute -bottom-2 -right-2 bg-black text-white hover:bg-black/90 rounded-full w-8 h-8 p-0"
+                      className="absolute -bottom-2 -right-2 bg-purple-600 hover:bg-purple-700 text-white rounded-full w-8 h-8 p-0 shadow-md"
                     >
                       <Camera className="w-4 h-4" />
                     </Button>
                   </div>
                   <div className="flex space-x-2">
-                    <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-full">
+                    <Button variant="outline" className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl">
                       <Upload className="w-4 h-4 mr-2" />
                       Upload Photo
                     </Button>
-                    <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-full">
+                    <Button variant="outline" className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Remove
                     </Button>
@@ -202,53 +190,53 @@ export default function ProfilePage() {
                 {/* Name Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-white">First Name</Label>
+                    <Label htmlFor="firstName" className="text-slate-700 font-medium">First Name</Label>
                     <Input
                       id="firstName"
                       value={profileData.firstName}
                       onChange={(e) => handleProfileUpdate('firstName', e.target.value)}
                       disabled={!isEditMode}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-white">Last Name</Label>
+                    <Label htmlFor="lastName" className="text-slate-700 font-medium">Last Name</Label>
                     <Input
                       id="lastName"
                       value={profileData.lastName}
                       onChange={(e) => handleProfileUpdate('lastName', e.target.value)}
                       disabled={!isEditMode}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
 
                 {/* Contact Information */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-white flex items-center">
-                    <Mail className="w-5 h-5 mr-2" />
+                  <h3 className="text-lg font-medium text-slate-800 flex items-center">
+                    <Mail className="w-5 h-5 mr-2 text-purple-600" />
                     Contact Information
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-white">Email</Label>
+                      <Label htmlFor="email" className="text-slate-700 font-medium">Email</Label>
                       <Input
                         id="email"
                         type="email"
                         value={profileData.email}
                         onChange={(e) => handleProfileUpdate('email', e.target.value)}
                         disabled={!isEditMode}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-white">Phone</Label>
+                      <Label htmlFor="phone" className="text-slate-700 font-medium">Phone</Label>
                       <Input
                         id="phone"
                         value={profileData.phone}
                         onChange={(e) => handleProfileUpdate('phone', e.target.value)}
                         disabled={!isEditMode}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                     </div>
                   </div>
@@ -257,8 +245,8 @@ export default function ProfilePage() {
                 {/* Location and Website */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="location" className="text-white flex items-center">
-                      <MapPin className="w-4 h-4 mr-2" />
+                    <Label htmlFor="location" className="text-slate-700 font-medium flex items-center">
+                      <MapPin className="w-4 h-4 mr-2 text-purple-600" />
                       Location
                     </Label>
                     <Input
@@ -266,12 +254,12 @@ export default function ProfilePage() {
                       value={profileData.location}
                       onChange={(e) => handleProfileUpdate('location', e.target.value)}
                       disabled={!isEditMode}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="website" className="text-white flex items-center">
-                      <Globe className="w-4 h-4 mr-2" />
+                    <Label htmlFor="website" className="text-slate-700 font-medium flex items-center">
+                      <Globe className="w-4 h-4 mr-2 text-purple-600" />
                       Website
                     </Label>
                     <Input
@@ -279,37 +267,35 @@ export default function ProfilePage() {
                       value={profileData.website}
                       onChange={(e) => handleProfileUpdate('website', e.target.value)}
                       disabled={!isEditMode}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
 
                 {/* Bio */}
                 <div className="space-y-2">
-                  <Label htmlFor="bio" className="text-white">Bio</Label>
+                  <Label htmlFor="bio" className="text-slate-700 font-medium">Bio</Label>
                   <Textarea
                     id="bio"
                     value={profileData.bio}
                     onChange={(e) => handleProfileUpdate('bio', e.target.value)}
                     rows={4}
                     disabled={!isEditMode}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-2xl resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
 
-                
-
                 {/* Preferences */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-white">Preferences</h3>
+                  <h3 className="text-lg font-medium text-slate-800">Preferences</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="timezone" className="text-white">Timezone</Label>
+                      <Label htmlFor="timezone" className="text-slate-700 font-medium">Timezone</Label>
                       <Select value={profileData.timezone} onValueChange={(value) => handleProfileUpdate('timezone', value)} disabled={!isEditMode}>
-                        <SelectTrigger className="bg-white/10 border-white/20 text-white focus:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed">
+                        <SelectTrigger className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-purple-900 border-purple-700 text-white">
+                        <SelectContent>
                           <SelectItem value="America/Los_Angeles">Pacific Time (PT)</SelectItem>
                           <SelectItem value="America/New_York">Eastern Time (ET)</SelectItem>
                           <SelectItem value="Europe/London">London (GMT)</SelectItem>
@@ -318,12 +304,12 @@ export default function ProfilePage() {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="language" className="text-white">Language</Label>
+                      <Label htmlFor="language" className="text-slate-700 font-medium">Language</Label>
                       <Select value={profileData.language} onValueChange={(value) => handleProfileUpdate('language', value)} disabled={!isEditMode}>
-                        <SelectTrigger className="bg-white/10 border-white/20 text-white focus:ring-white/40 rounded-full disabled:opacity-50 disabled:cursor-not-allowed">
+                        <SelectTrigger className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200 disabled:opacity-50 disabled:cursor-not-allowed">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-purple-900 border-purple-700 text-white">
+                        <SelectContent>
                           <SelectItem value="English">English</SelectItem>
                           <SelectItem value="Spanish">Spanish</SelectItem>
                           <SelectItem value="French">French</SelectItem>
@@ -339,108 +325,116 @@ export default function ProfilePage() {
 
           {/* Notifications Tab */}
           <TabsContent value="notifications" className="space-y-6">
-            <Card className="bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-3xl">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-white flex items-center">
-                  <Bell className="w-5 h-5 mr-2" />
+            <Card className="bg-white rounded-2xl border border-slate-200 shadow-sm">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-2xl">
+                <CardTitle className="text-xl font-semibold text-slate-800 flex items-center">
+                  <Bell className="w-5 h-5 mr-2 text-purple-600" />
                   Notification Preferences
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 p-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div>
-                      <h4 className="font-medium text-white">Email Notifications</h4>
-                      <p className="text-sm text-purple-200">Receive notifications via email</p>
+                      <h4 className="font-medium text-slate-800">Email Notifications</h4>
+                      <p className="text-sm text-slate-600">Receive notifications via email</p>
                     </div>
                     <div className="relative w-28 flex justify-end">
                       <Switch
                         checked={notifications.email}
                         onCheckedChange={(checked) => handleNotificationChange('email', checked)}
-                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-gray-300"
+                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-white border-2 border-purple-400 data-[state=checked]:border-purple-600 data-[state=unchecked]:border-purple-400 [&>span]:border-2 [&>span]:border-purple-400 [&>span]:bg-white"
                       />
-                      <span className={`absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold ${notifications.email ? 'text-white' : 'text-gray-700'}`}>
-                        {notifications.email ? 'ON' : 'OFF'}
-                      </span>
+                      {notifications.email && (
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold text-white">
+                          ON
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div>
-                      <h4 className="font-medium text-white">Push Notifications</h4>
-                      <p className="text-sm text-purple-200">Receive push notifications in browser</p>
+                      <h4 className="font-medium text-slate-800">Push Notifications</h4>
+                      <p className="text-sm text-slate-600">Receive push notifications in browser</p>
                     </div>
                     <div className="relative w-28 flex justify-end">
                       <Switch
                         checked={notifications.push}
                         onCheckedChange={(checked) => handleNotificationChange('push', checked)}
-                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-gray-300"
+                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-white border-2 border-purple-400 data-[state=checked]:border-purple-600 data-[state=unchecked]:border-purple-400 [&>span]:border-2 [&>span]:border-purple-400 [&>span]:bg-white"
                       />
-                      <span className={`absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold ${notifications.push ? 'text-white' : 'text-gray-700'}`}>
-                        {notifications.push ? 'ON' : 'OFF'}
-                      </span>
+                      {notifications.push && (
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold text-white">
+                          ON
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div>
-                      <h4 className="font-medium text-white">SMS Notifications</h4>
-                      <p className="text-sm text-purple-200">Receive notifications via SMS</p>
+                      <h4 className="font-medium text-slate-800">SMS Notifications</h4>
+                      <p className="text-sm text-slate-600">Receive notifications via SMS</p>
                     </div>
                     <div className="relative w-28 flex justify-end">
                       <Switch
                         checked={notifications.sms}
                         onCheckedChange={(checked) => handleNotificationChange('sms', checked)}
-                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-gray-300"
+                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-white border-2 border-purple-400 data-[state=checked]:border-purple-600 data-[state=unchecked]:border-purple-400 [&>span]:border-2 [&>span]:border-purple-400 [&>span]:bg-white"
                       />
-                      <span className={`absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold ${notifications.sms ? 'text-white' : 'text-gray-700'}`}>
-                        {notifications.sms ? 'ON' : 'OFF'}
-                      </span>
+                      {notifications.sms && (
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold text-white">
+                          ON
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div>
-                      <h4 className="font-medium text-white">Marketing Communications</h4>
-                      <p className="text-sm text-purple-200">Receive marketing and promotional emails</p>
+                      <h4 className="font-medium text-slate-800">Marketing Communications</h4>
+                      <p className="text-sm text-slate-600">Receive marketing and promotional emails</p>
                     </div>
                     <div className="relative w-28 flex justify-end">
                       <Switch
                         checked={notifications.marketing}
                         onCheckedChange={(checked) => handleNotificationChange('marketing', checked)}
-                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-gray-300"
+                        className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-white border-2 border-purple-400 data-[state=checked]:border-purple-600 data-[state=unchecked]:border-purple-400 [&>span]:border-2 [&>span]:border-purple-400 [&>span]:bg-white"
                       />
-                      <span className={`absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold ${notifications.marketing ? 'text-white' : 'text-gray-700'}`}>
-                        {notifications.marketing ? 'ON' : 'OFF'}
-                      </span>
+                      {notifications.marketing && (
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold text-white">
+                          ON
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <Separator className="bg-white/10" />
+                <Separator className="bg-slate-200" />
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-white">Notification Types</h3>
+                  <h3 className="text-lg font-medium text-slate-800">Notification Types</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-white/5 rounded-2xl">
-                      <h4 className="font-medium text-white mb-2">Course Updates</h4>
-                      <p className="text-sm text-purple-200 mb-3">Get notified about new courses and updates</p>
-                      <Badge variant="secondary" className="bg-purple-600 text-white">Active</Badge>
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <h4 className="font-medium text-slate-800 mb-2">Course Updates</h4>
+                      <p className="text-sm text-slate-600 mb-3">Get notified about new courses and updates</p>
+                      <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200">Active</Badge>
                     </div>
-                    <div className="p-4 bg-white/5 rounded-2xl">
-                      <h4 className="font-medium text-white mb-2">Community</h4>
-                      <p className="text-sm text-purple-200 mb-3">Notifications from community discussions</p>
-                      <Badge variant="secondary" className="bg-purple-600 text-white">Active</Badge>
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <h4 className="font-medium text-slate-800 mb-2">Community</h4>
+                      <p className="text-sm text-slate-600 mb-3">Notifications from community discussions</p>
+                      <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200">Active</Badge>
                     </div>
-                    <div className="p-4 bg-white/5 rounded-2xl">
-                      <h4 className="font-medium text-white mb-2">Achievements</h4>
-                      <p className="text-sm text-purple-200 mb-3">Celebrate your learning milestones</p>
-                      <Badge variant="secondary" className="bg-purple-600 text-white">Active</Badge>
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <h4 className="font-medium text-slate-800 mb-2">Achievements</h4>
+                      <p className="text-sm text-slate-600 mb-3">Celebrate your learning milestones</p>
+                      <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200">Active</Badge>
                     </div>
-                    <div className="p-4 bg-white/5 rounded-2xl">
-                      <h4 className="font-medium text-white mb-2">System Updates</h4>
-                      <p className="text-sm text-purple-200 mb-3">Important platform updates and maintenance</p>
-                      <Badge variant="secondary" className="bg-purple-600 text-white">Active</Badge>
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <h4 className="font-medium text-slate-800 mb-2">System Updates</h4>
+                      <p className="text-sm text-slate-600 mb-3">Important platform updates and maintenance</p>
+                      <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200">Active</Badge>
                     </div>
                   </div>
                 </div>
@@ -450,57 +444,57 @@ export default function ProfilePage() {
 
           {/* Security Tab */}
           <TabsContent value="security" className="space-y-6">
-            <Card className="bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-3xl">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-white flex items-center">
-                  <Shield className="w-5 h-5 mr-2" />
+            <Card className="bg-white rounded-2xl border border-slate-200 shadow-sm">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-2xl">
+                <CardTitle className="text-xl font-semibold text-slate-800 flex items-center">
+                  <Shield className="w-5 h-5 mr-2 text-purple-600" />
                   Security Settings
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 p-6">
                 <div className="space-y-4">
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <h4 className="font-medium text-white mb-2">Change Password</h4>
-                    <p className="text-sm text-purple-200 mb-4">Update your password to keep your account secure</p>
-                                         <Button 
-                       onClick={handleChangePassword}
-                       variant="outline" 
-                       className="bg-purple-600 border-purple-500 text-white hover:bg-purple-700 rounded-full px-6"
-                     >
-                       <Edit3 className="w-4 h-4 mr-2" />
-                       Change Password
-                     </Button>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-medium text-slate-800 mb-2">Change Password</h4>
+                    <p className="text-sm text-slate-600 mb-4">Update your password to keep your account secure</p>
+                    <Button 
+                      onClick={handleChangePassword}
+                      variant="outline" 
+                      className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl"
+                    >
+                      <Edit3 className="w-4 h-4 mr-2" />
+                      Change Password
+                    </Button>
                   </div>
 
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <h4 className="font-medium text-white mb-2">Two-Factor Authentication</h4>
-                    <p className="text-sm text-purple-200 mb-4">Add an extra layer of security to your account</p>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-medium text-slate-800 mb-2">Two-Factor Authentication</h4>
+                    <p className="text-sm text-slate-600 mb-4">Add an extra layer of security to your account</p>
                     <div className="flex items-center space-x-4">
                       <div className="relative w-28 flex justify-end">
-                        <Switch className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-gray-300" />
-                        <span className="absolute right-0 top-1/2 -translate-y-1/2 pr-1 text-xs font-semibold text-gray-700">OFF</span>
+                        <Switch className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-white border-2 border-purple-400 data-[state=checked]:border-purple-600 data-[state=unchecked]:border-purple-400 [&>span]:border-2 [&>span]:border-purple-400 [&>span]:bg-white" />
+
                       </div>
-                      <span className="text-sm text-purple-200">Enable 2FA</span>
+                      <span className="text-sm text-slate-600">Enable 2FA</span>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <h4 className="font-medium text-white mb-2">Active Sessions</h4>
-                    <p className="text-sm text-purple-200 mb-4">Manage your active login sessions</p>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-medium text-slate-800 mb-2">Active Sessions</h4>
+                    <p className="text-sm text-slate-600 mb-4">Manage your active login sessions</p>
                     <div className="space-y-2">
-                      <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
+                      <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200">
                         <div>
-                          <p className="text-white font-medium">Current Session</p>
-                          <p className="text-sm text-purple-200">Windows • Chrome • San Francisco, CA</p>
+                          <p className="font-medium text-slate-800">Current Session</p>
+                          <p className="text-sm text-slate-600">Windows • Chrome • San Francisco, CA</p>
                         </div>
-                        <Badge variant="secondary" className="bg-green-600 text-white">Active</Badge>
+                        <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-200">Active</Badge>
                       </div>
-                      <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
+                      <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200">
                         <div>
-                          <p className="text-white font-medium">Mobile Session</p>
-                          <p className="text-sm text-purple-200">iPhone • Safari • San Francisco, CA</p>
+                          <p className="font-medium text-slate-800">Mobile Session</p>
+                          <p className="text-sm text-slate-600">iPhone • Safari • San Francisco, CA</p>
                         </div>
-                        <Badge variant="secondary" className="bg-purple-600 text-white">Active</Badge>
+                        <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200">Active</Badge>
                       </div>
                     </div>
                   </div>
@@ -511,105 +505,103 @@ export default function ProfilePage() {
 
           {/* Appearance Tab */}
           <TabsContent value="appearance" className="space-y-6">
-            <Card className="bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-3xl">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-white flex items-center">
-                  <Palette className="w-5 h-5 mr-2" />
+            <Card className="bg-white rounded-2xl border border-slate-200 shadow-sm">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-2xl">
+                <CardTitle className="text-xl font-semibold text-slate-800 flex items-center">
+                  <Palette className="w-5 h-5 mr-2 text-purple-600" />
                   Appearance Settings
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 p-6">
                 <div className="space-y-4">
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <h4 className="font-medium text-white mb-2">Theme</h4>
-                    <p className="text-sm text-purple-200 mb-4">Choose your preferred theme</p>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-medium text-slate-800 mb-2">Theme</h4>
+                    <p className="text-sm text-slate-600 mb-4">Choose your preferred theme</p>
                     <div className="grid grid-cols-3 gap-3">
-                      <Button variant="outline" className="bg-purple-600 border-purple-500 text-white rounded-full">
+                      <Button variant="outline" className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl">
                         Dark
                       </Button>
-                      <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-full">
+                      <Button variant="outline" className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl">
                         Light
                       </Button>
-                      <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-full">
+                      <Button variant="outline" className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl">
                         Auto
                       </Button>
                     </div>
                   </div>
 
-
-
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <h4 className="font-medium text-white mb-2">Font Size</h4>
-                    <p className="text-sm text-purple-200 mb-4">Adjust the text size</p>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-medium text-slate-800 mb-2">Font Size</h4>
+                    <p className="text-sm text-slate-600 mb-4">Adjust the text size</p>
                     <div className="flex items-center space-x-4">
-                      <span className="text-sm text-purple-200">Small</span>
-                      <div className="flex-1 bg-white/10 rounded-full h-2">
+                      <span className="text-sm text-slate-600">Small</span>
+                      <div className="flex-1 bg-slate-200 rounded-full h-2">
                         <div className="bg-purple-600 h-2 rounded-full w-2/3"></div>
                       </div>
-                      <span className="text-sm text-purple-200">Large</span>
+                      <span className="text-sm text-slate-600">Large</span>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
-                 </Tabs>
-       </div>
+        </Tabs>
+      </div>
 
-       {/* Change Password Modal */}
-       {showPasswordModal && (
-         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-           <Card className="bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-3xl w-full max-w-md mx-4">
-             <CardHeader>
-               <CardTitle className="text-xl font-semibold text-white text-center">Change Password</CardTitle>
-               <p className="text-purple-200 text-center">Update your password to keep your account secure</p>
-             </CardHeader>
-             <CardContent className="space-y-4">
-               <div className="space-y-2">
-                 <Label htmlFor="currentPassword" className="text-white">Current Password</Label>
-                 <Input
-                   id="currentPassword"
-                   type="password"
-                   placeholder="Enter current password"
-                   className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full"
-                 />
-               </div>
-               <div className="space-y-2">
-                 <Label htmlFor="newPassword" className="text-white">New Password</Label>
-                 <Input
-                   id="newPassword"
-                   type="password"
-                   placeholder="Enter new password"
-                   className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full"
-                 />
-               </div>
-               <div className="space-y-2">
-                 <Label htmlFor="confirmPassword" className="text-white">Confirm New Password</Label>
-                 <Input
-                   id="confirmPassword"
-                   type="password"
-                   placeholder="Confirm new password"
-                   className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/40 rounded-full"
-                 />
-               </div>
-               <div className="flex space-x-3 pt-4">
-                 <Button 
-                   onClick={handleClosePasswordModal}
-                   variant="outline"
-                   className="flex-1 bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-full"
-                 >
-                   Cancel
-                 </Button>
-                 <Button 
-                   className="flex-1 bg-purple-600 text-white hover:bg-purple-700 rounded-full"
-                 >
-                   Update Password
-                 </Button>
-               </div>
-             </CardContent>
-           </Card>
-         </div>
-       )}
+      {/* Change Password Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4 bg-white rounded-2xl border border-slate-200 shadow-xl">
+            <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-2xl">
+              <CardTitle className="text-xl font-semibold text-center text-slate-800">Change Password</CardTitle>
+              <p className="text-slate-600 text-center">Update your password to keep your account secure</p>
+            </CardHeader>
+            <CardContent className="space-y-4 p-6">
+              <div className="space-y-2">
+                <Label htmlFor="currentPassword" className="text-slate-700 font-medium">Current Password</Label>
+                <Input
+                  id="currentPassword"
+                  type="password"
+                  placeholder="Enter current password"
+                  className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="newPassword" className="text-slate-700 font-medium">New Password</Label>
+                <Input
+                  id="newPassword"
+                  type="password"
+                  placeholder="Enter new password"
+                  className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-slate-700 font-medium">Confirm New Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm new password"
+                  className="rounded-xl border-slate-300 focus:border-purple-400 focus:ring-purple-200"
+                />
+              </div>
+              <div className="flex space-x-3 pt-4">
+                <Button 
+                  onClick={handleClosePasswordModal}
+                  variant="outline"
+                  className="flex-1 border-2 border-purple-300 text-purple-700 hover:bg-purple-50 rounded-xl"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  className="flex-1 bg-white border-2 border-purple-600 text-purple-700 hover:bg-purple-50 rounded-xl"
+                >
+                  Update Password
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   )
 }
