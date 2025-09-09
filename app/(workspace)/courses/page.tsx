@@ -6,6 +6,7 @@ import CourseCard from "@/components/course-card"
 import { courses } from "@/data/courses"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+ 
 
 export default function CoursesPage() {
   // UI-only for now per requirements; values are not used to filter server-side
