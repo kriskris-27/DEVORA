@@ -42,8 +42,9 @@ This project is currently **private**. Only approved members can contribute and 
 ---
 
 ## 🎨 UI Preview  
-![UI Preview](public/image.png)  
-
+![UI Preview](public/image.png) 
+![UI Preview](public/imagedash.png)  
+ 
 ---
 
 ## ⚙️ Installation  
