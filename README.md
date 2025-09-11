@@ -1,82 +1,131 @@
-📚 Devora – Learning Management System
 
-Devora is a modern Learning Management System (LMS) built for students and instructors, delivering an interactive, secure, and scalable learning experience.
+# Devora  
 
-🚀 Features
+## 📖 Introduction  
+**Devora** is a comprehensive Learning Management System (LMS) designed for students and instructors. It provides a modern, secure, and interactive platform for online learning, with built-in backend endpoints, strong authentication, and a scalable relational database backend.  
 
-Interactive Learning – engaging course modules and activities
+This project is currently **private**. Only approved members can contribute and raise PRs.  
 
-Server-Side Rendering (SSR) – improved SEO and faster performance
+---
 
-Utility-First Styling – responsive design with frameworks like TailwindCSS
+## 📑 Table of Contents  
+- [Features](#-features)  
+- [System Architecture](#-system-architecture)  
+- [UI Preview](#-ui-preview)  
+- [Installation](#-installation)  
+- [Usage](#-usage)  
+- [Configuration](#-configuration)  
+- [Dependencies](#-dependencies)  
+- [Examples](#-examples)  
+- [Troubleshooting](#-troubleshooting)  
+- [Contributors](#-contributors)  
+- [License](#-license)  
 
-Strongly Typed Components – built with TypeScript for reliability
+---
 
-Prebuilt UI Components – clean, reusable, and consistent UI elements
+## ✨ Features  
+- 📚 **Interactive Learning** – Engaging learning experiences for students and instructors.  
+- ⚡ **Server-side Rendering** – Fast, SEO-friendly rendering for all pages.  
+- 🎨 **Utility-first Styling** – Consistent and customizable UI styling.  
+- 🧩 **Prebuilt UI Components** – Reusable and responsive components.  
+- 🎬 **Smooth Animations** – Enhanced user experience with fluid transitions.  
+- 🔐 **Secure User Authentication** – Protects user data and course content.  
+- 🗄 **Relational Database Backend** – Reliable storage for course materials, users, and progress.  
+- 🌐 **Built-in Backend Endpoints** – APIs for seamless integration and extensibility.  
+- ✅ **Strongly Typed Components** – Safer and more maintainable development.  
 
-Smooth Animations – modern, intuitive user interactions
+---
 
-Secure Authentication – role-based login system (students, instructors, admins)
+## 📐 System Architecture  
+![System Architecture](docs/images/architecture.png)  
 
-Relational Database Backend – scalable and structured data storage
+---
 
-Built-in Backend Endpoints – API-first design for flexibility
+## 🎨 UI Preview  
+![UI Preview](public/image.png)  
 
-🏗️ Tech Stack
+---
 
-Frontend: React (Next.js / SSR), TailwindCSS, TypeScript
+## ⚙️ Installation  
+1. Clone the repository:
+   
+```bash
+   git clone git@github.com:your-org/devora.git
+   cd devora
+````
 
-Backend: Node.js / Express (or Nest.js)
+2. Install dependencies:
 
-Database: PostgreSQL / MySQL (Relational DB)
+   ```bash
+   npm install
+   ```
 
-Authentication: JWT / OAuth2 / Session-based Auth
+3. Set up your environment variables (see [Configuration](#-configuration)).
 
-Deployment: Docker + Cloud (AWS / GCP / Vercel)
+4. Run the development server:
 
-📂 Project Structure
-/frontend      → UI & client-side logic  
-/backend       → API & server-side endpoints  
-/database      → Schema & migrations  
-/docs          → Documentation & planning  
+   ```bash
+   npm run dev
+   ```
 
-⚙️ Installation
+---
 
-Clone the repository
+## 🚀 Usage
 
-git clone https://github.com/your-username/devora.git
-cd devora
+* Visit `http://localhost:3000` to access the LMS locally.
+* Instructors can create courses and manage content.
+* Students can enroll, track progress, and interact with materials.
 
+---
 
-Install dependencies
+## 🔧 Configuration
 
-npm install
+Create a `.env` file in the project root with:
 
+```env
+DATABASE_URL=your-database-url
+JWT_SECRET=your-secret-key
+NEXTAUTH_URL=http://localhost:3000
+```
 
-Configure environment variables (.env) for database and authentication.
+---
 
-Start development servers:
+## 📦 Dependencies
 
-npm run dev
+* **Next.js** (server-side rendering)
+* **TailwindCSS** (utility-first styling)
+* **TypeScript** (strong typing)
+* **Prisma / PostgreSQL** (relational database)
+* **NextAuth.js** (authentication)
 
-🔐 Authentication & Roles
+---
 
-Students – access courses, track progress
+## 🖥 Examples
 
-Instructors – create and manage course content
+* Instructor dashboard for course creation.
+* Student dashboard with progress tracking.
+* Authentication flow with protected routes.
 
-Admins – oversee users and system settings
+---
 
-🎯 Roadmap
+## 🛠 Troubleshooting
 
- Course progress tracking
+* **Database connection issues** → Verify `DATABASE_URL` in `.env`.
+* **Auth errors** → Check JWT secret and NextAuth config.
+* **Styling issues** → Run `npm run build` to rebuild Tailwind CSS.
 
- AI-powered learning recommendations
+---
 
- Mobile-first PWA support
+## 👥 Contributors
 
- Payment gateway integration
+* Only approved organization members can contribute.
+* Please create a feature branch before raising a PR.
 
-📜 License
+---
 
-This project is currently private and not open for external contributions.
+## 📜 License
+
+This project is currently **private**. License terms will be provided upon public release.
+
+```
+
