@@ -81,12 +81,14 @@ This project is currently **private**. Only approved members can contribute and 
 
 ## 🔧 Configuration
 
-Create a `.env` file in the project root with:
+<!-- Create a `.env` file in the project root with:
 
 ```env
 DATABASE_URL=your-database-url
 JWT_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3000 -->
+
+WORK IN PROGRESS
 ```
 
 ---
@@ -111,9 +113,7 @@ NEXTAUTH_URL=http://localhost:3000
 
 ## 🛠 Troubleshooting
 
-* **Database connection issues** → Verify `DATABASE_URL` in `.env`.
-* **Auth errors** → Check JWT secret and NextAuth config.
-* **Styling issues** → Run `npm run build` to rebuild Tailwind CSS.
+WORK IN PROGRESS
 
 ---
 
