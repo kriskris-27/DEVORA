@@ -4,7 +4,6 @@
 ## 📖 Introduction  
 **Devora** is a comprehensive Learning Management System (LMS) designed for students and instructors. It provides a modern, secure, and interactive platform for online learning, with built-in backend endpoints, strong authentication, and a scalable relational database backend.  
 
-This project is currently **private**. Only approved members can contribute and raise PRs.  
 
 ---
 
