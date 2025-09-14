@@ -85,11 +85,12 @@
 ```env
 DATABASE_URL=your-database-url
 JWT_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000 -->
+NEXTAUTH_URL=http://localhost:3000
 
-WORK IN PROGRESS
+
 ```
-
+ -->
+WORK IN PROGRESS
 ---
 
 ## 📦 Dependencies
