@@ -29,8 +29,6 @@ function usePageTitle() {
   switch (first) {
     case "/dashboard":
       return "Dashboard"
-    case "/courses":
-      return "Courses"
     case "/problem-solving":
       return "Problem Solving"
     case "/career-tools":
