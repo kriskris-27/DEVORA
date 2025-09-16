@@ -48,10 +48,11 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const title = usePageTitle()
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
+  const isCommunity = pathname === "/community" || pathname.startsWith("/community/")
 
   return (
     <SidebarProvider>
-      {/* Sidebar: white bg, logo, search, nav with icons, settings/help footer */}
+      {/* Sidebar */}
       <Sidebar className="[&_[data-sidebar=sidebar]]:bg-white [&_[data-sidebar=sidebar]]:text-gray-900 [&_[data-sidebar=sidebar]]:border-r [&_[data-sidebar=sidebar]]:border-black/5">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-2">
@@ -150,8 +151,8 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
         </SidebarFooter>
       </Sidebar>
 
-      {/* Shared header + content container; inherits global bg (#F5F6FB) */}
-      <SidebarInset className="bg-[#F5F6FB]">
+      {/* Shared header + content container */}
+      <SidebarInset className="bg-white">
         <header className="mx-auto w-full max-w-6xl px-4 py-4 md:py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">

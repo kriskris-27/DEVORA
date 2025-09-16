@@ -92,3 +92,20 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Scoped theme for community page: dark purple surfaces with high contrast */
+.community-surface {
+  --card: 270 35% 14%;
+  --card-foreground: 0 0% 100%;
+  --popover: 270 35% 14%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 270 30% 18%;
+  --muted-foreground: 270 15% 80%;
+  --secondary: 276 35% 22%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 292 45% 28%;
+  --accent-foreground: 0 0% 100%;
+  --border: 270 25% 30%;
+  --input: 270 25% 30%;
+  --ring: 292 80% 60%;
+}
