@@ -31,7 +31,7 @@ app.get('/api/health', (req, res) => {
 // Simple test endpoint
 app.get('/api/test', (req, res) => {
   res.status(200).json({
-    message: 'Hello from MERN DevOps Practice App!',
+    message: 'Hello from backend!',
     timestamp: new Date().toISOString(),
   });
 });
