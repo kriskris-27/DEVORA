@@ -4,6 +4,8 @@ import MechanicAuth from './pages/MechanicAuth'
 import MechanicDashboard from './pages/MechanicDashboard'
 import MechanicOnboarding from './pages/MechanicOnboarding'
 import FindMechanics from './pages/FindMechanics'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 
 function ProtectedMechanicRoute({ children }: { children: JSX.Element }) {
@@ -24,6 +26,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/" element={<ProtectedUserRoute><Home/></ProtectedUserRoute>} />
           <Route path="/home" element={<Home/>} />
@@ -47,6 +50,7 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
   )
