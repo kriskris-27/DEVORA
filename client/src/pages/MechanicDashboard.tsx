@@ -8,7 +8,7 @@ export default function MechanicDashboard() {
 
   useEffect(() => {
     if (!user || role !== 'mechanic') {
-      navigate('/mechanic', { replace: true })
+      navigate('/', { replace: true })
     }
   }, [user, role, navigate])
   return (

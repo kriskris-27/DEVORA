@@ -2,22 +2,21 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth/AuthProvider'
 import MechanicAuth from './pages/MechanicAuth'
 import MechanicDashboard from './pages/MechanicDashboard'
+import Home from './pages/Home'
+import RoleChooser from './pages/Rolechooser'
 
 function ProtectedMechanicRoute({ children }: { children: JSX.Element }) {
   const { role, user } = useAuth()
   if (!user) return <Navigate to="/mechanic" replace />
-  if (role !== 'mechanic') return <Navigate to="/" replace />
+  if (role !== 'mechanic') return <Navigate to="/home" replace />
   return children
 }
 
-function Home() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold">Welcome</h1>
-      <p className="text-gray-600 mt-2">Users can enter directly. Mechanics please sign in.</p>
-      <a className="text-blue-600 underline mt-4 inline-block" href="/mechanic">Mechanic portal</a>
-    </div>
-  )
+function ProtectedUserRoute({ children }: { children: JSX.Element }) {
+  const { role, user } = useAuth()
+  if (!user) return <Navigate to="/home" replace />
+  if (role !== 'user') return <Navigate to="/" replace />
+  return children
 }
 
 export default function App() {
@@ -25,7 +24,8 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<ProtectedUserRoute><Home/></ProtectedUserRoute>} />
+          <Route path="/home" element={<Home/>} />
           <Route path="/mechanic" element={<MechanicAuth />} />
           <Route
             path="/mechanic/dashboard"
