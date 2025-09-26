@@ -38,6 +38,21 @@ export default function MechanicOnboarding() {
     if (!user) navigate('/mechanic', { replace: true })
   }, [user, navigate])
 
+  // First-time: try to auto-detect location for default pin
+  useEffect(() => {
+    if (lat != null && lng != null) return
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setLat(pos.coords.latitude)
+          setLng(pos.coords.longitude)
+        },
+        () => {},
+        { enableHighAccuracy: true }
+      )
+    }
+  }, [lat, lng])
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(undefined)
@@ -74,9 +89,9 @@ export default function MechanicOnboarding() {
         <form onSubmit={submit} className="grid gap-3 md:grid-cols-2">
           <input className="input" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
           <input className="input" placeholder="Working hours (e.g. 9am-6pm)" value={workingHours} onChange={(e) => setWorkingHours(e.target.value)} />
-          <input className="input" placeholder="Contact number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          <input className="input" placeholder="Contact number" value={phone} onChange={(e) => setPhone(e.target.value)} pattern="^[0-9\-\+\s]{6,15}$" title="Enter a valid phone number" />
           <div className="md:col-span-2">
-            <p className="text-sm text-gray-600 mb-2">Click on the map to set your shop location</p>
+            <p className="text-sm text-gray-600 mb-2">We used your current location if permitted. Click on the map to set or adjust your shop location.</p>
             <div className="h[360px] md:h-[420px] rounded-2xl overflow-hidden">
               <MapContainer center={[20.5937, 78.9629]} zoom={5} style={{ height: '100%', width: '100%' }}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors" />

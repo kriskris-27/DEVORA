@@ -1,8 +1,28 @@
 import { useEffect, useState } from 'react'
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 import { useAuth } from '../auth/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 type LatLng = { lat: number; lng: number }
 type Mechanic = { email: string; name: string; workingHours: string; phone: string; location: LatLng }
+
+const markerIcon = new L.Icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+})
+
+function ClickPicker({ onPick }: { onPick: (lat: number, lng: number) => void }) {
+  useMapEvents({
+    click(e) {
+      onPick(e.latlng.lat, e.latlng.lng)
+    },
+  })
+  return null
+}
 
 export default function MechanicDashboard() {
   const { user, role, signOut } = useAuth()
@@ -84,12 +104,22 @@ export default function MechanicDashboard() {
                      onChange={(e) => setProfile({ ...(profile as Mechanic), workingHours: e.target.value })} />
               <input className="input" value={profile.phone ?? ''}
                      onChange={(e) => setProfile({ ...(profile as Mechanic), phone: e.target.value })} />
-              <div className="grid grid-cols-2 gap-2">
-                <input className="input" value={profile.location?.lat ?? ''}
-                       onChange={(e) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lat: Number(e.target.value) } })} />
-                <input className="input" value={profile.location?.lng ?? ''}
-                       onChange={(e) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lng: Number(e.target.value) } })} />
+              <div className="grid md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <input className="input" value={profile.location?.lat ?? ''}
+                         onChange={(e) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lat: Number(e.target.value) } })} />
+                  <input className="input" value={profile.location?.lng ?? ''}
+                         onChange={(e) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lng: Number(e.target.value) } })} />
+                </div>
+                
               </div>
+              <div className="h-[380px]  rounded-2xl overflow-hidden">
+                  <MapContainer center={[profile.location?.lat || 20.5937, profile.location?.lng || 78.9629]} zoom={profile.location ? 13 : 5} style={{ height: '100%', width: '100%' }}>
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors" />
+                    <ClickPicker onPick={(la, ln) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lat: la, lng: ln } })} />
+                    {profile.location && <Marker position={[profile.location.lat, profile.location.lng]} icon={markerIcon} />}
+                  </MapContainer>
+                </div>
               <div className="flex gap-3">
                 <button className="btn btn-primary disabled:opacity-60" disabled={saving}
                         onClick={async () => {
@@ -106,6 +136,7 @@ export default function MechanicDashboard() {
                             if (!res.ok) throw new Error(data?.message || 'Failed to save')
                             setOriginal(profile)
                             setIsEditing(false)
+                            alert('Profile updated')
                           } catch (e: any) {
                             setError(e.message || 'Failed to save')
                           } finally {
