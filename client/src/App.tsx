@@ -2,8 +2,9 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth/AuthProvider'
 import MechanicAuth from './pages/MechanicAuth'
 import MechanicDashboard from './pages/MechanicDashboard'
+import MechanicOnboarding from './pages/MechanicOnboarding'
+import FindMechanics from './pages/FindMechanics'
 import Home from './pages/Home'
-import RoleChooser from './pages/Rolechooser'
 
 function ProtectedMechanicRoute({ children }: { children: JSX.Element }) {
   const { role, user } = useAuth()
@@ -26,7 +27,16 @@ export default function App() {
         <Routes>
           <Route path="/" element={<ProtectedUserRoute><Home/></ProtectedUserRoute>} />
           <Route path="/home" element={<Home/>} />
+          <Route path="/find" element={<FindMechanics/>} />
           <Route path="/mechanic" element={<MechanicAuth />} />
+          <Route
+            path="/mechanic/onboarding"
+            element={
+              <ProtectedMechanicRoute>
+                <MechanicOnboarding />
+              </ProtectedMechanicRoute>
+            }
+          />
           <Route
             path="/mechanic/dashboard"
             element={
