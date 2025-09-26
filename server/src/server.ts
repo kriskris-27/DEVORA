@@ -7,7 +7,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: ["http://localhost:5173"], credentials: false }));
+// Dynamic CORS origins from environment
+const CORS_ORIGINS = process.env.CORS_ORIGINS?.split(',') || ["http://localhost:5173"];
+console.log('[server] CORS origins:', CORS_ORIGINS);
+
+app.use(cors({ origin: CORS_ORIGINS, credentials: false }));
 app.use(express.json());
 
 // Simple request/response logger
