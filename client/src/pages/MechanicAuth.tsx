@@ -47,23 +47,9 @@ export default function MechanicAuth() {
   }
 
   useEffect(() => {
-    const decideNext = async () => {
-      if (!(user && role === 'mechanic')) return
-      const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:5000'
-      try {
-        const res = await fetch(`${API_URL}/api/mechanics/${encodeURIComponent(user.email!)}`)
-        if (res.status === 404) {
-          navigate('/mechanic/onboarding', { replace: true })
-        } else if (res.ok) {
-          navigate('/mechanic/dashboard', { replace: true })
-        } else {
-          navigate('/mechanic/onboarding', { replace: true })
-        }
-      } catch {
-        navigate('/mechanic/onboarding', { replace: true })
-      }
+    if (user && role === 'mechanic') {
+      navigate('/mechanic/dashboard', { replace: true })
     }
-    decideNext()
   }, [user, role, navigate])
 
   // Handle email confirmation redirect (PKCE flow): exchange ?code= for a session
@@ -120,12 +106,8 @@ export default function MechanicAuth() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md glass p-6 animate-[fadeIn_300ms_ease-out]">
-        <div className="flex items-center justify-between mb-4">
-          <button className="btn btn-ghost" onClick={() => navigate(-1)}>Back</button>
-          <span className="text-xs text-gray-600">Mechanic Portal</span>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md bg-white rounded-lg shadow p-6">
         <h1 className="text-2xl font-semibold mb-4">
           {isPasswordReset ? 'Reset Password' : isRegister ? 'Mechanic Registration' : 'Mechanic Login'}
         </h1>
@@ -135,7 +117,7 @@ export default function MechanicAuth() {
         {!isPasswordReset ? (
           <form onSubmit={onSubmit} className="space-y-3">
             <input
-              className="input"
+              className="w-full border rounded px-3 py-2"
               placeholder="Email"
               autoComplete="email"
               type="email"
@@ -144,7 +126,7 @@ export default function MechanicAuth() {
               required
             />
             <input
-              className="input"
+              className="w-full border rounded px-3 py-2"
               placeholder="Password"
               autoComplete={isRegister ? 'new-password' : 'current-password'}
               type="password"
@@ -154,7 +136,7 @@ export default function MechanicAuth() {
             />
             {isRegister && (
               <input
-                className="input"
+                className="w-full border rounded px-3 py-2"
                 placeholder="Confirm Password"
                 autoComplete="new-password"
                 type="password"
@@ -164,7 +146,7 @@ export default function MechanicAuth() {
               />
             )}
             <button
-              className="btn btn-primary w-full disabled:opacity-60"
+              className="w-full bg-blue-600 text-white rounded py-2 hover:bg-blue-700 disabled:opacity-60"
               type="submit"
               disabled={loading}
             >
@@ -174,7 +156,7 @@ export default function MechanicAuth() {
         ) : (
           <form onSubmit={onResetPassword} className="space-y-3">
             <input
-              className="input"
+              className="w-full border rounded px-3 py-2"
               placeholder="New Password"
               type="password"
               value={password}
@@ -182,14 +164,14 @@ export default function MechanicAuth() {
               required
             />
             <input
-              className="input"
+              className="w-full border rounded px-3 py-2"
               placeholder="Confirm New Password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <button className="btn btn-primary w-full" type="submit">
+            <button className="w-full bg-blue-600 text-white rounded py-2 hover:bg-blue-700" type="submit">
               Update Password
             </button>
           </form>
@@ -199,20 +181,20 @@ export default function MechanicAuth() {
           <>
             <div className="mt-4 flex items-center justify-between text-sm">
               <button
-                className="btn btn-ghost"
+                className="text-blue-600 hover:underline"
                 onClick={() => setIsRegister((v) => !v)}
               >
                 {isRegister ? 'Have an account? Login' : "Don't have an account? Register"}
               </button>
               {!isRegister && (
-                <button className="btn btn-ghost" onClick={forgotPassword}>
+                <button className="text-blue-600 hover:underline" onClick={forgotPassword}>
                   Forgot password?
                 </button>
               )}
             </div>
             {isRegister && (
               <div className="mt-2 text-right">
-                <button className="btn btn-ghost text-sm" onClick={resendConfirmation}>
+                <button className="text-sm text-blue-600 hover:underline" onClick={resendConfirmation}>
                   Resend confirmation email
                 </button>
               </div>
