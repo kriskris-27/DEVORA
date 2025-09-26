@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import type { ReactElement } from 'react'
 import { AuthProvider, useAuth } from './auth/AuthProvider'
 import MechanicAuth from './pages/MechanicAuth'
 import MechanicDashboard from './pages/MechanicDashboard'
@@ -8,14 +9,14 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 
-function ProtectedMechanicRoute({ children }: { children: JSX.Element }) {
+function ProtectedMechanicRoute({ children }: { children: ReactElement }) {
   const { role, user } = useAuth()
   if (!user) return <Navigate to="/mechanic" replace />
   if (role !== 'mechanic') return <Navigate to="/home" replace />
   return children
 }
 
-function ProtectedUserRoute({ children }: { children: JSX.Element }) {
+function ProtectedUserRoute({ children }: { children: ReactElement }) {
   const { role, user } = useAuth()
   if (!user) return <Navigate to="/home" replace />
   if (role !== 'user') return <Navigate to="/" replace />
