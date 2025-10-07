@@ -48,13 +48,27 @@ A full‑stack web app that connects users to nearby mechanics in real time. Bui
   - SPA 404 fix on Vercel via `vercel.json` rewrites
   - Extensive request/response and client logs
 
-## 5) Monorepo Structure
+
+## 5) OUTPUT
+    ![mechanic dashboard](./mechd.jpg)
+    -mechanic dashboard
+
+    ![userfind](./userfind.png)
+    -User search page for mechanics
+
+    ![mech login](./mechlogin.png)
+    -Mechanic login
+
+    ![mech onboarding](./monboarding.png)
+    -Mechanic onboarding
+
+## 6) Monorepo Structure
 ```
 client/          # React + Vite app
 server/          # Express + TS API
 ```
 
-## 6) Environment Variables
+## 7) Environment Variables
 
 Client (`client/.env`):
 ```
@@ -73,7 +87,7 @@ SUPABASE_SERVICE_ROLE=your_supabase_service_role_key
 
 Note: `.env` files are ignored and were scrubbed from git history.
 
-## 7) Local Development
+## 8) Local Development
 
 Terminal 1 – Server
 ```bash
@@ -91,7 +105,7 @@ npm run dev
 # Client runs on http://localhost:5173
 ```
 
-## 8) Deployment
+## 9) Deployment
 
 Client (Vercel):
 - Root Directory: `client`
@@ -110,7 +124,7 @@ Server (Render):
 - Start Command: `npm start`
 - Set env vars (see above)
 
-## 9) API Endpoints (server)
+## 10) API Endpoints (server)
 - POST `/api/mechanics`
   - Body: `{ email, name, workingHours, phone, location: { lat, lng } }`
   - Upserts a mechanic profile (in‑memory store for now)
@@ -121,7 +135,7 @@ Server (Render):
 - POST `/api/mechanics/sms/help`
   - Stub for future SMS integration
 
-## 10) How to Use (Demo Script)
+## 11) How to Use (Demo Script)
 - User:
   1) Open Home → click “Get Help Now”
   2) Allow location → see nearby mechanics on map + list
@@ -132,19 +146,19 @@ Server (Render):
   2) Onboarding → auto location + manual pin → save
   3) Dashboard → edit profile & coordinates via map → save
 
-## 11) Security
+## 12) Security
 - Client uses Supabase anon key only
 - Server uses Supabase service role key (env only)
 - `.env` files ignored; past commits cleaned
 
-## 12) Roadmap
+## 13) Roadmap
 - Persist mechanics in a real DB (Supabase/Postgres)
 - Integrate SMS fallback (Twilio)
 - Reviews/ratings and availability scheduling
 - Push notifications, job requests
 - Advanced filters and clustering on map
 
-## 13) Notable Files
+## 14) Notable Files
 - Client
   - `client/src/App.tsx` – routes + protected guards
   - `client/src/pages/MechanicAuth.tsx` – auth screens
