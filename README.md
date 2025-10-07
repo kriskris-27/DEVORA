@@ -50,7 +50,7 @@ A full‑stack web app that connects users to nearby mechanics in real time. Bui
 
 
 ## 5) OUTPUT
-    - ![mechanic dashboard](./mechd.jpg)
+- ![mechanic dashboard](./mechd.jpg)
   - Mechanic dashboard
 
 - ![userfind](./userfind.png)
