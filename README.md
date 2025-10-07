@@ -50,17 +50,17 @@ A full‑stack web app that connects users to nearby mechanics in real time. Bui
 
 
 ## 5) OUTPUT
-    ![mechanic dashboard](./mechd.jpg)
-    -mechanic dashboard
+    - ![mechanic dashboard](./mechd.jpg)
+  - Mechanic dashboard
 
-    ![userfind](./userfind.png)
-    -User search page for mechanics
+- ![userfind](./userfind.png)
+  - User search page for mechanics
 
-    ![mech login](./mechlogin.png)
-    -Mechanic login
+- ![mech login](./mechlogin.png)
+  - Mechanic login
 
-    ![mech onboarding](./monboarding.png)
-    -Mechanic onboarding
+- ![mech onboarding](./monboarding.png)
+  - Mechanic onboardin
 
 ## 6) Monorepo Structure
 ```
