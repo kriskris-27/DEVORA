@@ -55,7 +55,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     const claim = getRoleFromMeta(user.user_metadata) ?? getRoleFromMeta(user.app_metadata)
     setRole(claim ?? 'user')
-    console.log('[auth] resolved role:', claim ?? 'user')
+    console.log('[auth] resolved role + user1:', claim ?? 'user')
+    console.log('[auth] resolved for user',user)
   }, [user])
 
   const signInWithPassword = async (email: string, password: string) => {

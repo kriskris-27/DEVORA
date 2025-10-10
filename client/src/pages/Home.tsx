@@ -137,8 +137,8 @@ function Home() {
                 <p className="text-gray-600 leading-relaxed">
                   Get instant help from our support team. Chat, call, or message us anytime you need assistance.
                 </p>
-              </div>
-            </div>
+          </div>
+        </div>
           </div>
         </section>
 
