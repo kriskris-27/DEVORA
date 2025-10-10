@@ -2,29 +2,48 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import MechanicAuth from "../pages/MechanicAuth";
 import FindMechanics from "../pages/FindMechanics";
-// import { ProtectedUserRoute } from "../App";
-import AppLayout from "../Layouts/AppLayout";
 import MechanicOnboarding from "../pages/MechanicOnboarding";
+import Support from "../pages/Support";
+import Contact from "../pages/Contact";
+import FAQ from "../pages/FAQ";
+import Company from "../pages/Company";
+import Blog from "../pages/Blog";
+import Terms from "../pages/Terms";
+import Privacy from "../pages/Privacy";
+import Partners from "../pages/Partners";
+import Grievance from "../pages/Grievance";
+import AppLayout from "../Layouts/AppLayout";
 import { ProtectedMechanicRoute } from "../App";
 
 const AppRoutes = () => {
   return (
     <Routes>
-        {/* Anyone can access this  */}
+        {/* Public pages */}
         <Route path="/home" element={<Home/>} />
         <Route path="/mechanic" element={<MechanicAuth />} />
         <Route path="/find" element={<FindMechanics/>} />
+        <Route path="/support" element={<Support/>} />
+        <Route path="/contact" element={<Contact/>} />
+        <Route path="/faq" element={<FAQ/>} />
+        <Route path="/company" element={<Company/>} />
+        <Route path="/blog" element={<Blog/>} />
+        <Route path="/terms" element={<Terms/>} />
+        <Route path="/privacy" element={<Privacy/>} />
+        <Route path="/partners" element={<Partners/>} />
+        <Route path="/grievance" element={<Grievance/>} />
 
-
-        {/* This will bring the header and footer */}
-        <Route path="/" element={<ProtectedMechanicRoute>
-            <AppLayout/>
-        </ProtectedMechanicRoute>}>
-        
-            <Route path="/mech/onboarding" element={<MechanicOnboarding />}/>
+        {/* Mechanic routes with layout */}
+        <Route path="/mechanic" element={
+          <ProtectedMechanicRoute>
+            <AppLayout />
+          </ProtectedMechanicRoute>
+        }>
+          <Route path="onboarding" element={<MechanicOnboarding />} />
         </Route>
-           
 
+        {/* Default redirect */}
+        <Route path="/" element={<Home/>} />
+        <Route path="*" element={<Home/>} />
     </Routes>
   )
 }
