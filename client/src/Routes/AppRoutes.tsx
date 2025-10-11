@@ -14,6 +14,7 @@ import Partners from "../pages/Partners";
 import Grievance from "../pages/Grievance";
 import AppLayout from "../Layouts/AppLayout";
 import { ProtectedMechanicRoute } from "../App";
+import MechanicDashboard from "../pages/MechanicDashboard";
 
 const AppRoutes = () => {
   return (
@@ -39,6 +40,7 @@ const AppRoutes = () => {
           </ProtectedMechanicRoute>
         }>
           <Route path="onboarding" element={<MechanicOnboarding />} />
+          <Route path="dashboard" element={<MechanicDashboard />}/>
         </Route>
 
         {/* Default redirect */}
