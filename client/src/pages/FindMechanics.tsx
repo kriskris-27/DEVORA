@@ -88,7 +88,7 @@ export default function FindMechanics() {
     <div className="min-h-screen px-4 py-10">
       <div className="max-w-6xl mx-auto glass p-6 animate-[fadeIn_300ms_ease-out]">
       <div className="flex items-center justify-between mb-4">
-        <a className="btn btn-ghost" href="/">Back</a>
+        <a className="btn btn-ghost" href="/home">Back</a>
         <h1 className="text-2xl font-semibold">Find Nearby Mechanics</h1>
         <span />
       </div>
