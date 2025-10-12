@@ -33,13 +33,16 @@ const AppRoutes = () => {
         <Route path="/partners" element={<Partners/>} />
         <Route path="/grievance" element={<Grievance/>} />
 
+        <Route path="/" element={<AppLayout/>}>
+            <Route path="find" element={<FindMechanics/>} />
+        </Route>
+
         {/* Mechanic routes with layout */}
         <Route path="/mechanic" element={
           <ProtectedMechanicRoute>
             <AppLayout />
           </ProtectedMechanicRoute>
         }>
-          <Route path="/find" element={<FindMechanics/>} />
           <Route path="onboarding" element={<MechanicOnboarding />} />
           <Route path="dashboard" element={<MechanicDashboard />}/>
 
