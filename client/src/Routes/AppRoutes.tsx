@@ -22,7 +22,7 @@ const AppRoutes = () => {
         {/* Public pages */}
         <Route path="/home" element={<Home/>} />
         <Route path="/mechanic" element={<MechanicAuth />} />
-        <Route path="/find" element={<FindMechanics/>} />
+        
         <Route path="/support" element={<Support/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/faq" element={<FAQ/>} />
@@ -39,8 +39,10 @@ const AppRoutes = () => {
             <AppLayout />
           </ProtectedMechanicRoute>
         }>
+          <Route path="/find" element={<FindMechanics/>} />
           <Route path="onboarding" element={<MechanicOnboarding />} />
           <Route path="dashboard" element={<MechanicDashboard />}/>
+
         </Route>
 
         {/* Default redirect */}
