@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 
@@ -32,8 +32,6 @@ const userMarkerIcon = new L.Icon({
   iconAnchor: [12, 41],
 })
 
-/** 👆 Red = user marker | Blue = mechanic markers **/
-
 export default function FindMechanics() {
   const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:5000'
 
@@ -43,7 +41,6 @@ export default function FindMechanics() {
   const [radiusKm, setRadiusKm] = useState(10)
   const [error, setError] = useState<string | undefined>()
   const [loading, setLoading] = useState(false)
-  const [manualPin, setManualPin] = useState<LatLng | null>(null)
   const [offlineHint, setOfflineHint] = useState<string | undefined>()
 
   // Restore last search & get current location
@@ -69,42 +66,31 @@ export default function FindMechanics() {
     )
   }, [])
 
-  // ✅ Manual map click handler component
-  const ClickPicker = () => {
-    useMapEvents({
-      click(e) {
-        setManualPin({ lat: e.latlng.lat, lng: e.latlng.lng })
-      },
-    })
-    return null
-  }
-
   // Search nearby mechanics
   const search = async () => {
-    const c = manualPin ?? center
-    if (!c) return
+    if (!center) return
     setLoading(true)
     setError(undefined)
 
     try {
-      const url = `${API_URL}/api/mechanics?lat=${c.lat}&lng=${c.lng}&radiusKm=${radiusKm}`
+      const url = `${API_URL}/api/mechanics?lat=${center.lat}&lng=${center.lng}&radiusKm=${radiusKm}`
       const res = await fetch(url)
       const data = await res.json()
 
       if (!res.ok) throw new Error(data?.message || 'Search failed')
       setResults(data.results)
       setOfflineHint(undefined)
-      localStorage.setItem('find:last', JSON.stringify({ center: c, radiusKm }))
+      localStorage.setItem('find:last', JSON.stringify({ center, radiusKm }))
     } catch (e: any) {
       setError(e.message || 'Failed to search')
-      if (c)
-        setOfflineHint(`If online search fails, send SMS with GPS: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}`)
+      if (center)
+        setOfflineHint(`If online search fails, send SMS with GPS: ${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`)
     } finally {
       setLoading(false)
     }
   }
 
-  const mapCenter = useMemo<LatLng>(() => manualPin ?? center ?? { lat: 20.5937, lng: 78.9629 }, [manualPin, center])
+  const mapCenter = useMemo<LatLng>(() => center ?? { lat: 20.5937, lng: 78.9629 }, [center])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-100 px-4 py-8 sm:py-10">
@@ -155,14 +141,14 @@ export default function FindMechanics() {
             <button
               className="btn btn-primary flex-1 sm:flex-none shadow-lg hover:shadow-xl transition-all disabled:opacity-60"
               onClick={search}
-              disabled={(!center && !manualPin) || loading}
+              disabled={!center || loading}
             >
               {loading ? 'Searching…' : 'Search'}
             </button>
             <button
               className="btn btn-ghost flex-1 sm:flex-none shadow-sm hover:shadow-md transition-all"
               onClick={async () => {
-                const c = manualPin ?? center
+                const c = center
                 if (!c) return
                 const url = `https://www.google.com/maps?q=${c.lat},${c.lng}`
                 try {
@@ -200,20 +186,10 @@ export default function FindMechanics() {
                 attribution="&copy; OpenStreetMap contributors"
               />
 
-              {/* Allow manual click to set pin */}
-              <ClickPicker />
-
               {/* User marker */}
               {center && (
                 <Marker position={[center.lat, center.lng]} icon={userMarkerIcon} interactive={false}>
                   <Popup>You are here</Popup>
-                </Marker>
-              )}
-
-              {/* Manual pin marker */}
-              {manualPin && (
-                <Marker position={[manualPin.lat, manualPin.lng]} icon={userMarkerIcon}>
-                  <Popup>Search from this location</Popup>
                 </Marker>
               )}
 
