@@ -23,15 +23,7 @@ const AppRoutes = () => {
         <Route path="/home" element={<Home/>} />
         <Route path="/mechanic" element={<MechanicAuth />} />
         
-        <Route path="/support" element={<Support/>} />
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="/faq" element={<FAQ/>} />
-        <Route path="/company" element={<Company/>} />
-        <Route path="/blog" element={<Blog/>} />
-        <Route path="/terms" element={<Terms/>} />
-        <Route path="/privacy" element={<Privacy/>} />
-        <Route path="/partners" element={<Partners/>} />
-        <Route path="/grievance" element={<Grievance/>} />
+        
 
         <Route path="/" element={<AppLayout/>}>
             <Route path="find" element={<FindMechanics/>} />
@@ -43,6 +35,15 @@ const AppRoutes = () => {
             <AppLayout />
           </ProtectedMechanicRoute>
         }>
+          <Route path="/support" element={<Support/>} />
+        <Route path="/contact" element={<Contact/>} />
+        <Route path="/faq" element={<FAQ/>} />
+        <Route path="/company" element={<Company/>} />
+        <Route path="/blog" element={<Blog/>} />
+        <Route path="/terms" element={<Terms/>} />
+        <Route path="/privacy" element={<Privacy/>} />
+        <Route path="/partners" element={<Partners/>} />
+        <Route path="/grievance" element={<Grievance/>} />
           <Route path="onboarding" element={<MechanicOnboarding />} />
           <Route path="dashboard" element={<MechanicDashboard />}/>
 
