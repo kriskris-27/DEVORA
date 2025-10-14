@@ -19,42 +19,42 @@ import MechanicDashboard from "../pages/MechanicDashboard";
 const AppRoutes = () => {
   return (
     <Routes>
-        {/* Public pages */}
-        <Route path="/home" element={<Home/>} />
-        <Route path="/mechanic" element={<MechanicAuth />} />
-        
-        
+      {/* Public pages */}
+      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/mechanic" element={<MechanicAuth />} />
 
-        <Route path="/" element={<AppLayout/>}>
-            <Route path="find" element={<FindMechanics/>} />
-            <Route path="/support" element={<Support/>} />
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="/faq" element={<FAQ/>} />
-        <Route path="/company" element={<Company/>} />
-        <Route path="/blog" element={<Blog/>} />
-        <Route path="/terms" element={<Terms/>} />
-        <Route path="/privacy" element={<Privacy/>} />
-        <Route path="/partners" element={<Partners/>} />
-        <Route path="/grievance" element={<Grievance/>} />
-        </Route>
+      {/* Layout routes for general pages */}
+      <Route element={<AppLayout />}>
+        <Route path="find" element={<FindMechanics />} />
+        <Route path="support" element={<Support />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="faq" element={<FAQ />} />
+        <Route path="company" element={<Company />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="terms" element={<Terms />} />
+        <Route path="privacy" element={<Privacy />} />
+        <Route path="partners" element={<Partners />} />
+        <Route path="grievance" element={<Grievance />} />
+      </Route>
 
-        {/* Mechanic routes with layout */}
-        <Route path="/mechanic" element={
+      {/* Mechanic routes (protected + with layout) */}
+      <Route
+        path="/mechanic"
+        element={
           <ProtectedMechanicRoute>
             <AppLayout />
           </ProtectedMechanicRoute>
-        }>
-        
-          <Route path="onboarding" element={<MechanicOnboarding />} />
-          <Route path="dashboard" element={<MechanicDashboard />}/>
+        }
+      >
+        <Route path="onboarding" element={<MechanicOnboarding />} />
+        <Route path="dashboard" element={<MechanicDashboard />} />
+      </Route>
 
-        </Route>
-
-        {/* Default redirect */}
-        <Route path="/" element={<Home/>} />
-        <Route path="*" element={<Home/>} />
+      {/* Fallback route */}
+      <Route path="*" element={<Home />} />
     </Routes>
-  )
-}
+  );
+};
 
-export default AppRoutes
+export default AppRoutes;
