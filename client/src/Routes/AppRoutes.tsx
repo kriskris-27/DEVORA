@@ -27,15 +27,7 @@ const AppRoutes = () => {
 
         <Route path="/" element={<AppLayout/>}>
             <Route path="find" element={<FindMechanics/>} />
-        </Route>
-
-        {/* Mechanic routes with layout */}
-        <Route path="/mechanic" element={
-          <ProtectedMechanicRoute>
-            <AppLayout />
-          </ProtectedMechanicRoute>
-        }>
-          <Route path="/support" element={<Support/>} />
+            <Route path="/support" element={<Support/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/faq" element={<FAQ/>} />
         <Route path="/company" element={<Company/>} />
@@ -44,6 +36,15 @@ const AppRoutes = () => {
         <Route path="/privacy" element={<Privacy/>} />
         <Route path="/partners" element={<Partners/>} />
         <Route path="/grievance" element={<Grievance/>} />
+        </Route>
+
+        {/* Mechanic routes with layout */}
+        <Route path="/mechanic" element={
+          <ProtectedMechanicRoute>
+            <AppLayout />
+          </ProtectedMechanicRoute>
+        }>
+        
           <Route path="onboarding" element={<MechanicOnboarding />} />
           <Route path="dashboard" element={<MechanicDashboard />}/>
 
