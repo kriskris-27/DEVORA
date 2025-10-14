@@ -51,7 +51,7 @@ const AppRoutes = () => {
         </Route>
 
         {/* Default redirect */}
-        <Route path="/home" element={<Home/>} />
+        <Route path="/" element={<Home/>} />
         <Route path="*" element={<Home/>} />
     </Routes>
   )
