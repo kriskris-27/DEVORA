@@ -257,26 +257,28 @@ export default function MechanicAuth() {
 
         {!isPasswordReset && (
           <div className="mt-8 space-y-4">
-            <div className="flex items-center justify-between text-sm">
+            <div className="text-center">
               <button
-                className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                className="text-blue-600 hover:text-blue-700 font-medium transition-colors underline"
                 onClick={() => setIsRegister((v) => !v)}
               >
                 {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Create One"}
               </button>
-              {!isRegister && (
+            </div>
+            {!isRegister && (
+              <div className="text-center">
                 <button 
-                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors underline"
                   onClick={forgotPassword}
                 >
                   Forgot password?
                 </button>
-              )}
-            </div>
+              </div>
+            )}
             {isRegister && (
               <div className="text-center">
                 <button 
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                  className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors underline"
                   onClick={resendConfirmation}
                 >
                   Resend confirmation email
