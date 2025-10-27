@@ -125,7 +125,7 @@ export default function Support() {
                   <span className="text-2xl">📞</span>
                   <div>
                     <div className="font-medium text-gray-900">Emergency Hotline</div>
-                    <div className="text-blue-600 font-semibold">+1 (555) 123-4567</div>
+                    <div className="text-blue-600 font-semibold">+1 (313) 555-0123</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
