@@ -203,11 +203,8 @@ export default function Blog() {
         <div className="mt-16">
           <div className="glass p-8 rounded-2xl text-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Stay Updated
+              Stay Updated.
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Subscribe to our newsletter and never miss the latest tips, news, and updates from Break Down Buddy.
-            </p>
             <div className="max-w-md mx-auto flex gap-3">
               <input
                 type="email"
