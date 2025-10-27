@@ -23,7 +23,7 @@ export default function Header() {
               href="/find"
               className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
             >
-              Find help
+              Find Help
             </a>
             
             {/* Support Dropdown */}
@@ -69,7 +69,7 @@ export default function Header() {
               href="/mechanic"
               className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
             >
-              Mechanic portal
+              Mechanic Portal
             </a>
           </nav>
 
@@ -133,7 +133,7 @@ export default function Header() {
                 className="block px-3 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Mechanic portal
+                Mechanic Portal
               </a>
             </div>
           </div>
