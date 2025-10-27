@@ -5,9 +5,9 @@ export default function Footer() {
         <div className="flex items-center justify-between">
           <div>© {new Date().getFullYear()} BREAK DOWN BUDDY</div>
           <div className="flex gap-4">
-            <a href="#" className="hover:underline">Contact</a>
-            <a href="#" className="hover:underline">Privacy</a>
-            <a href="#" className="hover:underline">Terms</a>
+            <a href="/contact" className="hover:underline hover:text-blue-600 transition-colors">Contact</a>
+            <a href="/privacy" className="hover:underline hover:text-blue-600 transition-colors">Privacy</a>
+            <a href="/terms" className="hover:underline hover:text-blue-600 transition-colors">Terms</a>
           </div>
         </div>
       </div>
