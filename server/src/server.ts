@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { mechanicsRouter } from "./routes/mechanics.js";
+import { authRouter } from "./routes/auth.js";
 dotenv.config();
 
 const app = express();
@@ -32,6 +33,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/mechanics", mechanicsRouter);
+app.use("/api/auth", authRouter);
 
 app.listen(PORT , ()=>{
     console.log(`🚀 Server running on port http://localhost:${PORT}`);
