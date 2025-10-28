@@ -266,6 +266,43 @@ export default function FindMechanics() {
                 <div className="text-sm text-gray-600">{r.mechanic.workingHours}</div>
                 <div className="text-sm text-gray-600">{r.mechanic.phone}</div>
                 <div className="text-xs text-gray-500">{r.distanceKm.toFixed(2)} km away</div>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a
+                    className="px-4 py-2 bg-blue-200 text-blue-800 text-sm font-bold rounded-lg hover:bg-blue-300 transition-colors shadow-sm border-2 border-blue-300 flex items-center gap-2"
+                    href={`tel:${r.mechanic.phone}`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="text-lg">📞</span>
+                    <span className="text-shadow-sm">Call</span>
+                  </a>
+                  <a
+                    className="px-4 py-2 bg-green-200 text-green-800 text-sm font-bold rounded-lg hover:bg-green-300 transition-colors shadow-sm border-2 border-green-300 flex items-center gap-2"
+                    href={`https://wa.me/${r.mechanic.phone.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="text-lg">💬</span>
+                    <span className="text-shadow-sm">WhatsApp</span>
+                  </a>
+                  <button
+                    className="px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      navigator.clipboard.writeText(`${r.mechanic.location.lat}, ${r.mechanic.location.lng}`)
+                    }}
+                  >
+                    Copy
+                  </button>
+                  <a
+                    className="px-3 py-2 bg-gray-100 text-blue-600 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
+                    target="_blank"
+                    href={`https://www.google.com/maps?q=${r.mechanic.location.lat},${r.mechanic.location.lng}`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Navigate
+                  </a>
+                </div>
               </div>
             ))}
           </div>
