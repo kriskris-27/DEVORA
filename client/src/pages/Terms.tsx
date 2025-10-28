@@ -73,7 +73,7 @@ export default function Terms() {
                 <li>Not interfere with or disrupt the Service or servers</li>
                 <li>Not attempt to gain unauthorized access to any part of the Service</li>
                 <li>Respect the rights and privacy of other users</li>
-                <li>Comply with all applicable laws and regulations</li>
+                
               </ul>
             </section>
 
@@ -88,7 +88,7 @@ export default function Terms() {
                 <li>Provide high-quality, professional service</li>
                 <li>Maintain appropriate conduct with customers</li>
                 <li>Comply with all applicable laws and regulations</li>
-                <li>Keep your profile information up to date</li>
+            
               </ul>
             </section>
 

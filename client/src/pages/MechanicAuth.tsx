@@ -86,9 +86,23 @@ export default function MechanicAuth() {
     setError(undefined)
     setInfo(undefined)
     if (!email) return setError('Enter your email first')
-    const { error, ok } = await sendPasswordReset(email)
-    if (error) return setError(error)
-    if (ok) setInfo('Password reset email sent. Check your inbox.')
+    try {
+      setLoading(true)
+      const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:5000'
+      const res = await fetch(`${API_URL}/api/auth/users/${encodeURIComponent(email)}/exists`)
+      if (!res.ok) {
+        return setError('Could not verify email. Try again later.')
+      }
+      const payload = await res.json().catch(() => undefined as any)
+      if (!payload?.exists) {
+        return setError('User not found')
+      }
+      const { error, ok } = await sendPasswordReset(email)
+      if (error) return setError(error)
+      if (ok) setInfo('Password reset email sent. Check your inbox.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const resendConfirmation = async () => {
