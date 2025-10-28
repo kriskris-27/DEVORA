@@ -15,6 +15,7 @@ import Grievance from "../pages/Grievance";
 import AppLayout from "../Layouts/AppLayout";
 import { ProtectedMechanicRoute } from "../App";
 import MechanicDashboard from "../pages/MechanicDashboard";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
   return (
@@ -52,7 +53,7 @@ const AppRoutes = () => {
       </Route>
 
       {/* Fallback route */}
-      <Route path="*" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
