@@ -120,105 +120,174 @@ export default function MechanicAuth() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md glass p-6 animate-[fadeIn_300ms_ease-out]">
-        <div className="flex items-center justify-between mb-4">
-          <button className="btn btn-ghost" onClick={() => navigate(-1)}>Back</button>
-          <span className="text-xs text-gray-600">Mechanic Portal</span>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      <div className="w-full max-w-md">
+        {/* Header Section */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <button 
+              className="inline-flex items-center gap-1 bg-white/80 backdrop-blur-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-2 py-1 rounded-full border border-gray-200 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md"
+              onClick={() => navigate(-1)}
+            >
+              <div className="w-4 h-4 bg-gray-100 hover:bg-blue-100 rounded-full flex items-center justify-center transition-colors duration-200">
+                <span className="text-xs">←</span>
+              </div>
+              <span className="text-xs font-medium">Back</span>
+            </button>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-lg">
+                <span className="text-white text-xl">🔧</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Mechanic Portal</h1>
+                <p className="text-sm text-gray-600">Professional Service Access</p>
+              </div>
+            </div>
+            <div className="w-20"></div> {/* Spacer for balance */}
+          </div>
         </div>
-        <h1 className="text-2xl font-semibold mb-4">
-          {isPasswordReset ? 'Reset Password' : isRegister ? 'Mechanic Registration' : 'Mechanic Login'}
-        </h1>
+
+        {/* Login Card */}
+        <div className="glass p-8 rounded-3xl shadow-xl border border-white/20 animate-[fadeIn_300ms_ease-out]">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              {isPasswordReset ? 'Reset Password' : isRegister ? 'Create Account' : 'Welcome Back'}
+            </h2>
+            <p className="text-gray-600">
+              {isPasswordReset ? 'Enter your new password' : isRegister ? 'Join our network of professional mechanics' : 'Sign in to access your dashboard'}
+            </p>
+          </div>
         {error && <p className="text-red-600 mb-3 text-sm">{error}</p>}
         {info && <p className="text-green-600 mb-3 text-sm">{info}</p>}
 
         {!isPasswordReset ? (
-          <form onSubmit={onSubmit} className="space-y-3">
-            <input
-              className="input"
-              placeholder="Email"
-              autoComplete="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              className="input"
-              placeholder="Password"
-              autoComplete={isRegister ? 'new-password' : 'current-password'}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            {isRegister && (
-              <input
-                className="input"
-                placeholder="Confirm Password"
-                autoComplete="new-password"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            )}
+          <form onSubmit={onSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <input
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
+                  placeholder="Enter your email address"
+                  autoComplete="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
+                  placeholder="Enter your password"
+                  autoComplete={isRegister ? 'new-password' : 'current-password'}
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {isRegister && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                  <input
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
+                    placeholder="Confirm your password"
+                    autoComplete="new-password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              )}
+            </div>
             <button
-              className="btn btn-primary w-full disabled:opacity-60"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
               type="submit"
               disabled={loading}
             >
-              {loading ? 'Please wait…' : isRegister ? 'Register' : 'Login'}
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Please wait...
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  {isRegister ? 'Create Account' : 'Sign In'}
+                  <span>{isRegister ? '→' : '→'}</span>
+                </div>
+              )}
             </button>
           </form>
         ) : (
-          <form onSubmit={onResetPassword} className="space-y-3">
-            <input
-              className="input"
-              placeholder="New Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <input
-              className="input"
-              placeholder="Confirm New Password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-            <button className="btn btn-primary w-full" type="submit">
+          <form onSubmit={onResetPassword} className="space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                <input
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
+                  placeholder="Enter your new password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                <input
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
+                  placeholder="Confirm your new password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            <button 
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+              type="submit"
+            >
               Update Password
             </button>
           </form>
         )}
 
         {!isPasswordReset && (
-          <>
-            <div className="mt-4 flex items-center justify-between text-sm">
+          <div className="mt-8 space-y-4">
+            <div className="text-center">
               <button
-                className="btn btn-ghost"
+                className="text-blue-600 hover:text-blue-700 font-medium transition-colors underline"
                 onClick={() => setIsRegister((v) => !v)}
               >
-                {isRegister ? 'Have an account? Login' : "Don't have an account? Register"}
+                {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Create One"}
               </button>
-              {!isRegister && (
-                <button className="btn btn-ghost" onClick={forgotPassword}>
+            </div>
+            {!isRegister && (
+              <div className="text-center">
+                <button 
+                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors underline"
+                  onClick={forgotPassword}
+                >
                   Forgot password?
                 </button>
-              )}
-            </div>
+              </div>
+            )}
             {isRegister && (
-              <div className="mt-2 text-right">
-                <button className="btn btn-ghost text-sm" onClick={resendConfirmation}>
+              <div className="text-center">
+                <button 
+                  className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors underline"
+                  onClick={resendConfirmation}
+                >
                   Resend confirmation email
                 </button>
               </div>
             )}
-          </>
+          </div>
         )}
+        </div>
       </div>
     </div>
   )

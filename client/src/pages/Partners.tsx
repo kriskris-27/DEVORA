@@ -41,7 +41,7 @@ export default function Partners() {
       category: 'Technology'
     },
     {
-      name: 'PayPal',
+      name: 'Stripe',
       logo: '💳',
       description: 'Secure payment processing and financial services',
       category: 'Fintech'
@@ -57,6 +57,24 @@ export default function Partners() {
       logo: '🛡️',
       description: 'Insurance coverage and risk management solutions',
       category: 'Insurance'
+    },
+    {
+      name: 'O\'Reilly Auto Parts',
+      logo: '🔧',
+      description: 'Professional-grade automotive parts and tools distribution',
+      category: 'Retail'
+    },
+    {
+      name: 'Allstate',
+      logo: '🛡️',
+      description: 'Comprehensive insurance solutions for drivers and mechanics',
+      category: 'Insurance'
+    },
+    {
+      name: 'Amazon Web Services',
+      logo: '☁️',
+      description: 'Cloud infrastructure and data analytics services',
+      category: 'Technology'
     }
   ]
 

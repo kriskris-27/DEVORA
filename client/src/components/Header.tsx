@@ -29,7 +29,10 @@ export default function Header() {
             {/* Support Dropdown */}
             <div className="relative">
               <button
-                onClick={() => setIsSupportOpen(!isSupportOpen)}
+                onClick={() => {
+                  setIsSupportOpen(!isSupportOpen)
+                  setIsCompanyOpen(false) // Close company dropdown when opening support
+                }}
                 className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors flex items-center gap-1"
               >
                 Support
@@ -48,7 +51,10 @@ export default function Header() {
             {/* Company Dropdown */}
             <div className="relative">
               <button
-                onClick={() => setIsCompanyOpen(!isCompanyOpen)}
+                onClick={() => {
+                  setIsCompanyOpen(!isCompanyOpen)
+                  setIsSupportOpen(false) // Close support dropdown when opening company
+                }}
                 className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors flex items-center gap-1"
               >
                 Company

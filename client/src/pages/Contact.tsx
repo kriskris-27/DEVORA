@@ -88,6 +88,7 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       className="input w-full"
+                      placeholder="John Doe"
                       required
                     />
                   </div>
@@ -101,6 +102,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       className="input w-full"
+                      placeholder="john.doe@gmail.com"
                       required
                     />
                   </div>
@@ -117,6 +119,7 @@ export default function Contact() {
                       value={formData.phone}
                       onChange={handleChange}
                       className="input w-full"
+                      placeholder="+91 98765 43210"
                     />
                   </div>
                   <div>
@@ -148,6 +151,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     className="input w-full"
+                    placeholder="Regarding a service inquiry"
                     required
                   />
                 </div>
@@ -188,8 +192,8 @@ export default function Contact() {
                   <div>
                     <div className="font-medium text-gray-900">Headquarters</div>
                     <div className="text-gray-600">
-                      123 Tech Street<br />
-                      San Francisco, CA 94105<br />
+                      456 Automotive Plaza<br />
+                      Detroit, MI 48201<br />
                       United States
                     </div>
                   </div>
@@ -216,14 +220,14 @@ export default function Contact() {
                   <span className="text-2xl">📞</span>
                   <div>
                     <div className="font-medium text-gray-900">Phone</div>
-                    <div className="text-blue-600">+1 (555) 123-4567</div>
+                    <div className="text-blue-600">+1 (313) 555-0123</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">📧</span>
                   <div>
                     <div className="font-medium text-gray-900">Email</div>
-                    <div className="text-blue-600">hello@breakdownbuddy.com</div>
+                    <div className="text-blue-600">contact@breakdownbuddy.com</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
