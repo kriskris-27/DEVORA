@@ -219,10 +219,23 @@ export default function MechanicDashboard() {
                           setSaving(true)
                           setError(undefined)
                           try {
+                            // Derive HH:MM from the display string "h:mm AM - h:mm PM" if present
+                            const [a, b] = (profile.workingHours || '').split(' - ')
+                            const to24 = (s?: string) => {
+                              if (!s) return ''
+                              try {
+                                const d = new Date(`2000-01-01 ${s}`)
+                                return d.toTimeString().slice(0,5)
+                              } catch {}
+                              return ''
+                            }
+                            const workingHoursFrom = to24(a)
+                            const workingHoursTo = to24(b)
+                            const body = { ...profile, workingHoursFrom, workingHoursTo }
                             const res = await fetch(`${API_URL}/api/mechanics`, {
                               method: 'POST',
                               headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify(profile),
+                              body: JSON.stringify(body),
                             })
                             const data = await res.json().catch(() => undefined)
                             if (!res.ok) throw new Error(data?.message || 'Failed to save')

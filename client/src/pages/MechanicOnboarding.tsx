@@ -27,7 +27,8 @@ export default function MechanicOnboarding() {
   const navigate = useNavigate()
   const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:5000'
   const [name, setName] = useState('')
-  const [workingHours, setWorkingHours] = useState('')
+  const [workingHoursFrom, setWorkingHoursFrom] = useState('')
+  const [workingHoursTo, setWorkingHoursTo] = useState('')
   const [phone, setPhone] = useState('')
   const [lat, setLat] = useState<number | null>(null)
   const [lng, setLng] = useState<number | null>(null)
@@ -57,14 +58,14 @@ export default function MechanicOnboarding() {
     e.preventDefault()
     setError(undefined)
     if (!user?.email) return setError('Missing user email')
-    if (!name || !workingHours || !phone || lat == null || lng == null) return setError('Fill all fields and pick location')
+    if (!name || !workingHoursFrom || !workingHoursTo || !phone || lat == null || lng == null) return setError('Fill all fields and pick location')
     setLoading(true)
     try {
-      console.log('[client] POST /api/mechanics payload', { email: user.email, name, workingHours, phone, location: { lat, lng } })
+      console.log('[client] POST /api/mechanics payload', { email: user.email, name, workingHoursFrom, workingHoursTo, phone, location: { lat, lng } })
       const res = await fetch(`${API_URL}/api/mechanics`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: user.email, name, workingHours, phone, location: { lat, lng } }),
+        body: JSON.stringify({ email: user.email, name, workingHoursFrom, workingHoursTo, phone, location: { lat, lng } }),
       })
       console.log('[client] response status', res.status)
       const data = await res.json().catch(() => undefined)
@@ -88,7 +89,10 @@ export default function MechanicOnboarding() {
         {error && <p className="text-red-600 mb-3 text-sm">{error}</p>}
         <form onSubmit={submit} className="grid gap-3 md:grid-cols-2">
           <input className="input" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input className="input" placeholder="Working hours (e.g. 9am-6pm)" value={workingHours} onChange={(e) => setWorkingHours(e.target.value)} />
+          <div className="grid grid-cols-2 gap-3">
+            <input className="input" type="time" step="60" placeholder="From" value={workingHoursFrom} onChange={(e) => setWorkingHoursFrom(e.target.value)} />
+            <input className="input" type="time" step="60" placeholder="To" value={workingHoursTo} onChange={(e) => setWorkingHoursTo(e.target.value)} />
+          </div>
           <input className="input" placeholder="Contact number" value={phone} onChange={(e) => setPhone(e.target.value)} pattern="^[0-9\-\+\s]{6,15}$" title="Enter a valid phone number" />
           <div className="md:col-span-2">
             <p className="text-sm text-gray-600 mb-2">We used your current location if permitted. Click on the map to set or adjust your shop location.</p>
