@@ -4,11 +4,13 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 
 type LatLng = { lat: number; lng: number }
+
 type Result = {
   mechanic: {
     email: string
     name: string
-    workingHours: string
+    working_hours_from: string
+    working_hours_to: string
     phone: string
     location: LatLng
   }
@@ -42,8 +44,9 @@ export default function FindMechanics() {
   const [error, setError] = useState<string | undefined>()
   const [loading, setLoading] = useState(false)
   const [offlineHint, setOfflineHint] = useState<string | undefined>()
+  const [showAvailableOnly, setShowAvailableOnly] = useState(true)
 
-  // Restore last search & get current location
+  // 🧭 Restore last search & get current location
   useEffect(() => {
     const last = localStorage.getItem('find:last')
     if (last) {
@@ -66,7 +69,7 @@ export default function FindMechanics() {
     )
   }, [])
 
-  // Search nearby mechanics
+  // 🔍 Search nearby mechanics
   const search = async () => {
     if (!center) return
     setLoading(true)
@@ -91,6 +94,54 @@ export default function FindMechanics() {
   }
 
   const mapCenter = useMemo<LatLng>(() => center ?? { lat: 20.5937, lng: 78.9629 }, [center])
+
+ 
+  // 🕒 Check if mechanic is currently available
+// ✅ Works for both "06:15:00", "6:15 PM", "15:02:00" etc.
+function isMechanicAvailable(from: string, to: string): boolean {
+    if (!from || !to) return false;
+  
+    const now = new Date();
+  
+    // 🕓 Parse time to 24-hour format safely
+    const parseTime = (timeStr: string): number => {
+      timeStr = timeStr.trim().toUpperCase();
+  
+      // If AM/PM present, use Date parsing
+      if (timeStr.includes("AM") || timeStr.includes("PM")) {
+        const date = new Date(`1970-01-01T${timeStr.replace(" ", "")}`);
+        return isNaN(date.getTime()) ? 0 : date.getHours() * 3600 + date.getMinutes() * 60;
+      }
+  
+      // If plain HH:mm:ss — treat as 24-hour
+      const parts = timeStr.split(":").map(Number);
+      const [h, m = 0, s = 0] = parts;
+      return h * 3600 + m * 60 + s;
+    };
+  
+    const fromSecs = parseTime(from);
+    const toSecs = parseTime(to);
+  
+    const nowSecs = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  
+    // 🧠 Handle shift that spans midnight (like 22:00–06:00)
+    if (toSecs < fromSecs) {
+      // If it's after 'from' (late night) or before 'to' (early morning)
+      return nowSecs >= fromSecs || nowSecs <= toSecs;
+    }
+  
+    // Normal case (same-day interval)
+    return nowSecs >= fromSecs && nowSecs <= toSecs;
+  }
+  
+
+  // ⚙️ Filter mechanics by availability
+  const filteredResults = useMemo(() => {
+    if (!showAvailableOnly) return results
+    return results.filter((r) =>
+      isMechanicAvailable(r.mechanic.working_hours_from, r.mechanic.working_hours_to)
+    )
+  }, [results, showAvailableOnly])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-100 px-4 py-8 sm:py-10">
@@ -137,6 +188,19 @@ export default function FindMechanics() {
             ))}
           </div>
 
+          <div className="flex items-center gap-2">
+            <input
+              id="availableOnly"
+              type="checkbox"
+              checked={showAvailableOnly}
+              onChange={(e) => setShowAvailableOnly(e.target.checked)}
+              className="checkbox checkbox-sm"
+            />
+            <label htmlFor="availableOnly" className="text-sm text-gray-700">
+              Show only available now
+            </label>
+          </div>
+
           <div className="flex flex-wrap gap-2 w-full sm:w-auto">
             <button
               className="btn btn-primary flex-1 sm:flex-none shadow-lg hover:shadow-xl transition-all disabled:opacity-60"
@@ -144,26 +208,6 @@ export default function FindMechanics() {
               disabled={!center || loading}
             >
               {loading ? 'Searching…' : 'Search'}
-            </button>
-            <button
-              className="btn btn-ghost flex-1 sm:flex-none shadow-sm hover:shadow-md transition-all"
-              onClick={async () => {
-                const c = center
-                if (!c) return
-                const url = `https://www.google.com/maps?q=${c.lat},${c.lng}`
-                try {
-                  if ((navigator as any).share)
-                    await (navigator as any).share({
-                      title: 'My location',
-                      text: `My location: ${c.lat},${c.lng}`,
-                      url,
-                    })
-                  else await navigator.clipboard.writeText(`My location: ${c.lat},${c.lng}\n${url}`)
-                  alert('Location shared/copied')
-                } catch {}
-              }}
-            >
-              Share location
             </button>
           </div>
         </div>
@@ -186,60 +230,33 @@ export default function FindMechanics() {
                 attribution="&copy; OpenStreetMap contributors"
               />
 
-              {/* User marker */}
               {center && (
-                <Marker position={[center.lat, center.lng]} icon={userMarkerIcon} interactive={false}>
+                <Marker position={[center.lat, center.lng]} icon={userMarkerIcon}>
                   <Popup>You are here</Popup>
                 </Marker>
               )}
 
-              {/* Mechanics */}
-              {results.map((r) => (
+              {filteredResults.map((r) => (
                 <Marker
                   key={r.mechanic.email}
                   position={[r.mechanic.location.lat, r.mechanic.location.lng]}
                   icon={markerIcon}
                 >
                   <Popup>
-                    <div className="text-sm">
+                    <div className="text-sm space-y-1">
                       <div className="font-semibold text-gray-800">{r.mechanic.name}</div>
-                      <div>{r.mechanic.workingHours}</div>
+                      <div className="flex items-center gap-2">
+                        <span>
+                          {r.mechanic.working_hours_from} – {r.mechanic.working_hours_to}
+                        </span>
+                        {isMechanicAvailable(r.mechanic.working_hours_from, r.mechanic.working_hours_to) ? (
+                          <span className="text-green-600 font-semibold">🟢 Open</span>
+                        ) : (
+                          <span className="text-red-600 font-semibold">🔴 Closed</span>
+                        )}
+                      </div>
                       <div>{r.mechanic.phone}</div>
                       <div>{r.distanceKm.toFixed(2)} km away</div>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <a 
-                          className="px-4 py-2 bg-blue-200 text-blue-800 text-sm font-bold rounded-lg hover:bg-blue-300 transition-colors shadow-sm border-2 border-blue-300 flex items-center gap-2"
-                          href={`tel:${r.mechanic.phone}`}
-                        >
-                          <span className="text-lg">📞</span>
-                          <span className="text-shadow-sm">Call</span>
-                        </a>
-                        <a 
-                          className="px-4 py-2 bg-green-200 text-green-800 text-sm font-bold rounded-lg hover:bg-green-300 transition-colors shadow-sm border-2 border-green-300 flex items-center gap-2"
-                          href={`https://wa.me/${r.mechanic.phone.replace(/[^0-9]/g, '')}`}
-                          target="_blank"
-                        >
-                          <span className="text-lg">💬</span>
-                          <span className="text-shadow-sm">WhatsApp</span>
-                        </a>
-                        <button
-                          className="px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
-                          onClick={() =>
-                            navigator.clipboard.writeText(
-                              `${r.mechanic.location.lat}, ${r.mechanic.location.lng}`
-                            )
-                          }
-                        >
-                          Copy
-                        </button>
-                        <a
-                          className="px-3 py-2 bg-gray-100 text-blue-600 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
-                          target="_blank"
-                          href={`https://www.google.com/maps?q=${r.mechanic.location.lat},${r.mechanic.location.lng}`}
-                        >
-                          Navigate
-                        </a>
-                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -249,12 +266,12 @@ export default function FindMechanics() {
 
           {/* Results Section */}
           <div className="space-y-4 max-h-[450px] overflow-y-auto pr-1 sm:pr-2">
-            {results.length === 0 && (
+            {filteredResults.length === 0 && (
               <p className="text-sm text-gray-500 text-center sm:text-left">
                 No results yet. Click <strong>Search</strong>.
               </p>
             )}
-            {results.map((r) => (
+            {filteredResults.map((r) => (
               <div
                 key={r.mechanic.email}
                 className={`border rounded-2xl p-4 sm:p-5 bg-white shadow hover:shadow-lg transition-all cursor-pointer ${
@@ -263,46 +280,18 @@ export default function FindMechanics() {
                 onClick={() => setSelectedEmail(r.mechanic.email)}
               >
                 <div className="font-semibold text-lg sm:text-xl text-gray-800">{r.mechanic.name}</div>
-                <div className="text-sm text-gray-600">{r.mechanic.workingHours}</div>
+                <div className="flex items-center gap-2 text-sm text-gray-700">
+                  <span>
+                    {r.mechanic.working_hours_from} – {r.mechanic.working_hours_to}
+                  </span>
+                  {isMechanicAvailable(r.mechanic.working_hours_from, r.mechanic.working_hours_to) ? (
+                    <span className="text-green-600 font-semibold">🟢 Available</span>
+                  ) : (
+                    <span className="text-red-600 font-semibold">🔴 Closed</span>
+                  )}
+                </div>
                 <div className="text-sm text-gray-600">{r.mechanic.phone}</div>
                 <div className="text-xs text-gray-500">{r.distanceKm.toFixed(2)} km away</div>
-
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <a
-                    className="px-4 py-2 bg-blue-200 text-blue-800 text-sm font-bold rounded-lg hover:bg-blue-300 transition-colors shadow-sm border-2 border-blue-300 flex items-center gap-2"
-                    href={`tel:${r.mechanic.phone}`}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <span className="text-lg">📞</span>
-                    <span className="text-shadow-sm">Call</span>
-                  </a>
-                  <a
-                    className="px-4 py-2 bg-green-200 text-green-800 text-sm font-bold rounded-lg hover:bg-green-300 transition-colors shadow-sm border-2 border-green-300 flex items-center gap-2"
-                    href={`https://wa.me/${r.mechanic.phone.replace(/[^0-9]/g, '')}`}
-                    target="_blank"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <span className="text-lg">💬</span>
-                    <span className="text-shadow-sm">WhatsApp</span>
-                  </a>
-                  <button
-                    className="px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      navigator.clipboard.writeText(`${r.mechanic.location.lat}, ${r.mechanic.location.lng}`)
-                    }}
-                  >
-                    Copy
-                  </button>
-                  <a
-                    className="px-3 py-2 bg-gray-100 text-blue-600 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
-                    target="_blank"
-                    href={`https://www.google.com/maps?q=${r.mechanic.location.lat},${r.mechanic.location.lng}`}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Navigate
-                  </a>
-                </div>
               </div>
             ))}
           </div>
