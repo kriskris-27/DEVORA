@@ -99,6 +99,50 @@ export default function Blog() {
       readTime: '4 min read',
       image: '🚨',
       featured: false
+    },
+    {
+      id: 9,
+      title: 'Summer Car Care: Protecting Your Vehicle from Heat Damage',
+      excerpt: 'Learn how to protect your car from extreme heat and prevent common summer-related breakdowns.',
+      category: 'tips',
+      author: 'Sarah Johnson',
+      date: '2023-12-25',
+      readTime: '6 min read',
+      image: '☀️',
+      featured: false
+    },
+    {
+      id: 10,
+      title: 'Understanding Your Car\'s Warning Lights: A Complete Guide',
+      excerpt: 'Decode what your dashboard warning lights mean and when to seek immediate help.',
+      category: 'tips',
+      author: 'Michael Chen',
+      date: '2023-12-22',
+      readTime: '7 min read',
+      image: '⚠️',
+      featured: false
+    },
+    {
+      id: 11,
+      title: 'Break Down Buddy Partners with Major Insurance Companies',
+      excerpt: 'New partnerships make roadside assistance more accessible and affordable for everyone.',
+      category: 'news',
+      author: 'Emily Rodriguez',
+      date: '2023-12-20',
+      readTime: '4 min read',
+      image: '🤝',
+      featured: false
+    },
+    {
+      id: 12,
+      title: 'Mobile Mechanic vs. Traditional Repair Shop: Which is Right for You?',
+      excerpt: 'Compare the benefits of mobile mechanics versus traditional repair shops for your next service.',
+      category: 'tips',
+      author: 'David Kim',
+      date: '2023-12-18',
+      readTime: '8 min read',
+      image: '🔧',
+      featured: false
     }
   ]
 
@@ -203,11 +247,8 @@ export default function Blog() {
         <div className="mt-16">
           <div className="glass p-8 rounded-2xl text-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Stay Updated
+              Stay Updated.
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Subscribe to our newsletter and never miss the latest tips, news, and updates from Break Down Buddy.
-            </p>
             <div className="max-w-md mx-auto flex gap-3">
               <input
                 type="email"

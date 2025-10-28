@@ -1,7 +1,7 @@
 export default function Company() {
   const stats = [
-    { number: '50K+', label: 'Happy Customers' },
-    { number: '2K+', label: 'Verified Mechanics' },
+    { number: '75K+', label: 'Happy Customers' },
+    { number: '3.5K+', label: 'Verified Mechanics' },
     { number: '99.9%', label: 'Uptime' },
     { number: '24/7', label: 'Support' }
   ]
@@ -44,25 +44,37 @@ export default function Company() {
       name: 'Sarah Johnson',
       role: 'CEO & Founder',
       image: '👩‍💼',
-      bio: 'Former automotive engineer with 15+ years experience in the industry.'
+      bio: 'Former automotive engineer with 15+ years experience at Ford Motor Company. Passionate about making roadside assistance accessible to everyone.'
     },
     {
       name: 'Michael Chen',
       role: 'CTO',
       image: '👨‍💻',
-      bio: 'Tech veteran who previously led engineering teams at major tech companies.'
+      bio: 'Tech veteran who previously led engineering teams at Uber and Google. Expert in location-based services and real-time matching algorithms.'
     },
     {
       name: 'Emily Rodriguez',
       role: 'Head of Operations',
       image: '👩‍🔧',
-      bio: 'Operations expert with deep knowledge of the automotive service industry.'
+      bio: 'Operations expert with 12+ years in automotive service management. Former regional manager at AAA with deep industry connections.'
     },
     {
       name: 'David Kim',
       role: 'Head of Customer Success',
       image: '👨‍💼',
-      bio: 'Customer-focused leader with a passion for delivering exceptional experiences.'
+      bio: 'Customer-focused leader with a passion for delivering exceptional experiences. Previously led customer success at Lyft and DoorDash.'
+    },
+    {
+      name: 'James Wilson',
+      role: 'Head of Safety & Compliance',
+      image: '👨‍🔒',
+      bio: 'Former insurance executive with expertise in risk management and safety protocols. Ensures all mechanics meet our strict safety standards.'
+    },
+    {
+      name: 'Lisa Thompson',
+      role: 'Head of Marketing',
+      image: '👩‍💼',
+      bio: 'Marketing strategist with 10+ years in automotive and tech industries. Previously led marketing campaigns at Tesla and Rivian.'
     }
   ]
 
@@ -138,7 +150,7 @@ export default function Company() {
         {/* Our Team */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Meet Our Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, index) => (
               <div key={index} className="glass p-6 rounded-2xl text-center">
                 <div className="text-6xl mb-4">{member.image}</div>

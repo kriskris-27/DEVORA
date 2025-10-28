@@ -52,7 +52,7 @@ export default function Grievance() {
             Customer Grievance Policy
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We are committed to resolving your concerns promptly and fairly. Your feedback helps us improve our services.
+            We are committed to resolving your concerns promptly and fairly. Your feedback helps us improve our services and ensures the highest quality experience for all our customers.
           </p>
         </div>
 
@@ -63,11 +63,12 @@ export default function Grievance() {
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">What We Promise</h3>
               <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                <li>Timely acknowledgment of all grievances</li>
-                <li>Fair and impartial investigation</li>
-                <li>Transparent communication throughout the process</li>
+                <li>Timely acknowledgment of all grievances within 2 hours</li>
+                <li>Fair and impartial investigation by our dedicated team</li>
+                <li>Transparent communication throughout the entire process</li>
                 <li>Appropriate resolution and compensation when warranted</li>
-                <li>Continuous improvement based on feedback</li>
+                <li>Follow-up to ensure your complete satisfaction</li>
+                <li>Continuous improvement based on your feedback</li>
               </ul>
             </div>
             <div>

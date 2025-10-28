@@ -18,7 +18,15 @@ export default function FAQ() {
         },
         {
           question: 'What areas do you cover?',
-          answer: 'We currently cover major cities across the United States and are rapidly expanding. You can check if we\'re available in your area by entering your location on our homepage.'
+          answer: 'We currently cover major metropolitan areas across the United States, including all major cities in California, Texas, New York, Florida, and Illinois. We\'re rapidly expanding to new markets. You can check if we\'re available in your area by entering your location on our homepage.'
+        },
+        {
+          question: 'Is there a mobile app available?',
+          answer: 'Yes! Our mobile app is available for both iOS and Android devices. The app provides all the same features as our website, plus push notifications for mechanic updates and offline access to emergency contact information.'
+        },
+        {
+          question: 'What types of vehicles do you service?',
+          answer: 'We service all types of vehicles including cars, trucks, SUVs, motorcycles, and RVs. Our mechanics are equipped to handle most roadside assistance needs, from jump starts and tire changes to more complex mechanical issues.'
         }
       ]
     },
@@ -44,6 +52,18 @@ export default function FAQ() {
         {
           question: 'Can I track my mechanic\'s location?',
           answer: 'Yes! Once your mechanic is assigned, you\'ll receive real-time updates on their location and estimated arrival time. You can track them through our app or receive SMS updates.'
+        },
+        {
+          question: 'What payment methods do you accept?',
+          answer: 'We accept all major credit cards (Visa, MasterCard, American Express), debit cards, and digital wallets including Apple Pay and Google Pay. All payments are processed securely through our encrypted payment system.'
+        },
+        {
+          question: 'Do you offer roadside assistance for electric vehicles?',
+          answer: 'Yes! We have specialized mechanics trained to handle electric vehicle roadside assistance, including battery issues, charging problems, and EV-specific diagnostics. Our mechanics carry the necessary equipment for EV service.'
+        },
+        {
+          question: 'What if my car can\'t be fixed on the spot?',
+          answer: 'If your vehicle can\'t be repaired on-site, our mechanic will help arrange a tow to the nearest repair shop or your preferred location. We work with trusted towing partners and can coordinate the entire process for you.'
         }
       ]
     },
@@ -65,6 +85,18 @@ export default function FAQ() {
         {
           question: 'Can I set my own schedule?',
           answer: 'Yes! You have complete control over when you\'re available. Simply update your availability in your dashboard, and we\'ll only send you requests during your active hours.'
+        },
+        {
+          question: 'What tools and equipment do I need?',
+          answer: 'You\'ll need basic roadside assistance tools including jumper cables, tire changing equipment, basic diagnostic tools, and safety equipment. We provide a recommended equipment list and can connect you with suppliers for discounted rates.'
+        },
+        {
+          question: 'How much can I earn as a mechanic?',
+          answer: 'Earnings vary based on location, availability, and service quality. Our top mechanics earn $75-150 per hour, with additional bonuses for high ratings and quick response times. We provide detailed earnings reports and tips for maximizing your income.'
+        },
+        {
+          question: 'What support do you provide to mechanics?',
+          answer: 'We offer 24/7 support, training resources, equipment recommendations, and marketing assistance. Our support team is always available to help with technical issues, customer disputes, or business questions.'
         }
       ]
     },

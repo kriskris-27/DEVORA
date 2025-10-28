@@ -17,6 +17,8 @@ A full‑stack web app that connects users to nearby mechanics in real time. Bui
 - Auth: Supabase (email/password, password reset, sessions)
 - Hosting: Client (Vercel with SPA rewrites), Server (Render)
 
+
+
 ## 4) Key Features
 - Supabase Auth: register, login, logout, password reset
 - RBAC: `user` and `mechanic` via Supabase `user_metadata.role`

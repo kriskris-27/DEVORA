@@ -192,8 +192,8 @@ export default function Terms() {
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-600">
                   <strong>Email:</strong> legal@breakdownbuddy.com<br />
-                  <strong>Address:</strong> 123 Tech Street, San Francisco, CA 94105<br />
-                  <strong>Phone:</strong> +1 (555) 123-4567
+                  <strong>Address:</strong> 456 Automotive Plaza, Detroit, MI 48201<br />
+                  <strong>Phone:</strong> +1 (313) 555-0123
                 </p>
               </div>
             </section>

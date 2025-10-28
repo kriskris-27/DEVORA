@@ -64,18 +64,34 @@ export default function MechanicDashboard() {
   return (
     <div className="min-h-screen px-4 py-10">
       <div className="max-w-4xl mx-auto glass p-6 animate-[fadeIn_300ms_ease-out]">
-        <div className="flex justify-between items-center">
-          <button className="btn btn-ghost" onClick={() => navigate(-1)}>Back</button>
-          <h1 className="text-2xl font-semibold">Mechanic Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <button 
+            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-full border border-gray-200 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md"
+            onClick={() => navigate(-1)}
+          >
+            <div className="w-5 h-5 bg-gray-100 hover:bg-blue-100 rounded-full flex items-center justify-center transition-colors duration-200">
+              <span className="text-sm">←</span>
+            </div>
+            <span className="font-medium">Back</span>
+          </button>
+          
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-900">Mechanic Dashboard</h1>
+            <p className="text-sm text-gray-600 mt-1">Manage your profile and settings</p>
+          </div>
+          
           <button
-          className="btn btn-ghost"
-          onClick={async () => {
-            await signOut()
-            navigate('/mechanic', { replace: true })
-          }}
-        >
-          Sign out
-        </button>
+            className="inline-flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 px-4 py-2 rounded-full border border-red-200 hover:border-red-300 transition-all duration-200 shadow-sm hover:shadow-md"
+            onClick={async () => {
+              await signOut()
+              navigate('/mechanic', { replace: true })
+            }}
+          >
+            <div className="w-5 h-5 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors duration-200">
+              <span className="text-sm">↪</span>
+            </div>
+            <span className="font-medium">Sign Out</span>
+          </button>
         </div>
       <div className="mt-4 space-y-1">
         <p className="text-gray-700">Email: {user?.email}</p>
@@ -89,9 +105,15 @@ export default function MechanicDashboard() {
           {!isEditing ? (
             <div className="mt-6 grid gap-3 max-w-xl">
               <div className="text-lg font-medium">{profile.name}</div>
-              <div className="text-gray-700">Hours: {profile.workingHours}</div>
-              <div className="text-gray-700">Phone: {profile.phone}</div>
-              <div className="text-gray-700">Location: {profile.location?.lat}, {profile.location?.lng}</div>
+              <div className="text-gray-700">
+                <span className="font-medium">Working Hours:</span> {profile.workingHours || 'Not set'}
+              </div>
+              <div className="text-gray-700">
+                <span className="font-medium">Phone:</span> {profile.phone || 'Not set'}
+              </div>
+              <div className="text-gray-700">
+                <span className="font-medium">Location:</span> {profile.location?.lat ? `${profile.location.lat}, ${profile.location.lng}` : 'Not set'}
+              </div>
               <div className="mt-2">
                 <button className="btn btn-primary" onClick={() => setIsEditing(true)}>Edit</button>
               </div>
@@ -99,16 +121,86 @@ export default function MechanicDashboard() {
           ) : (
             <div className="mt-6 grid gap-3 max-w-xl">
               <input className="input" value={profile.name ?? ''}
+                     placeholder="Enter your full name"
                      onChange={(e) => setProfile({ ...(profile as Mechanic), name: e.target.value })} />
-              <input className="input" value={profile.workingHours ?? ''}
-                     onChange={(e) => setProfile({ ...(profile as Mechanic), workingHours: e.target.value })} />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
+                  <div className="relative">
+                    <input 
+                      className="input w-full pr-12" 
+                      type="time"
+                      step="60"
+                      value={(() => {
+                        const timeStr = profile.workingHours?.split(' - ')[0] || ''
+                        if (!timeStr) return ''
+                        try {
+                          const date = new Date(`2000-01-01 ${timeStr}`)
+                          return date.toTimeString().slice(0, 5)
+                        } catch {
+                          return ''
+                        }
+                      })()}
+                      onChange={(e) => {
+                        const toTime = profile.workingHours?.split(' - ')[1] || ''
+                        const time24 = e.target.value
+                        const time12 = time24 ? new Date(`2000-01-01T${time24}`).toLocaleTimeString('en-US', { 
+                          hour: 'numeric', 
+                          minute: '2-digit', 
+                          hour12: true 
+                        }) : ''
+                        setProfile({ ...(profile as Mechanic), workingHours: `${time12} - ${toTime}` })
+                      }} 
+                    />
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none">
+                      
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
+                  <div className="relative">
+                    <input 
+                      className="input w-full pr-12" 
+                      type="time"
+                      step="60"
+                      value={(() => {
+                        const timeStr = profile.workingHours?.split(' - ')[1] || ''
+                        if (!timeStr) return ''
+                        try {
+                          const date = new Date(`2000-01-01 ${timeStr}`)
+                          return date.toTimeString().slice(0, 5)
+                        } catch {
+                          return ''
+                        }
+                      })()}
+                      onChange={(e) => {
+                        const fromTime = profile.workingHours?.split(' - ')[0] || ''
+                        const time24 = e.target.value
+                        const time12 = time24 ? new Date(`2000-01-01T${time24}`).toLocaleTimeString('en-US', { 
+                          hour: 'numeric', 
+                          minute: '2-digit', 
+                          hour12: true 
+                        }) : ''
+                        setProfile({ ...(profile as Mechanic), workingHours: `${fromTime} - ${time12}` })
+                      }} 
+                    />
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
               <input className="input" value={profile.phone ?? ''}
+                     placeholder="+91 98765 43210"
                      onChange={(e) => setProfile({ ...(profile as Mechanic), phone: e.target.value })} />
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="grid grid-cols-2 gap-2">
                   <input className="input" value={profile.location?.lat ?? ''}
+                         placeholder="Latitude"
                          onChange={(e) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lat: Number(e.target.value) } })} />
                   <input className="input" value={profile.location?.lng ?? ''}
+                         placeholder="Longitude"
                          onChange={(e) => setProfile({ ...(profile as Mechanic), location: { ...(profile.location || { lat: 0, lng: 0 }), lng: Number(e.target.value) } })} />
                 </div>
                 
