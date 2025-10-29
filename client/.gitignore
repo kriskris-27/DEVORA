@@ -1,5 +1,3 @@
-# Root level .gitignore
-
 # Node.js dependencies
 node_modules/
 npm-debug.log*
@@ -7,29 +5,29 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Production builds
+# Production build
 dist/
 build/
-client/dist/
-server/dist/
-
-# Environment files
-.env
-.env.local
-.env.*.local
-client/.env
-server/.env
 
 # Logs
 logs/
 *.log
 *.log.*
+pids/
+*.pid
+*.seed
+*.pid.lock
 
 # OS files
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Environment files
+.env
+.env.local
+.env.*.local
 
 # IDE / Editor files
 .vscode/
@@ -45,7 +43,6 @@ Desktop.ini
 
 # Vite cache
 .vite/
-client/.vite/
 
 # Optional npm cache
 .npm
