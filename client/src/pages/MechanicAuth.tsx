@@ -20,20 +20,32 @@ export default function MechanicAuth() {
     setInfo(undefined)
     setLoading(true)
     try {
-      if (isRegister) {
-        if (password.length < 6) {
-          setError('Password must be at least 6 characters')
-          return
-        }
-        if (password !== confirmPassword) {
-          setError('Passwords do not match')
-          return
-        }
-        const { error, userConfirmed } = await signUpMechanic(email, password)
-        if (error) {
-          setError(error)
-          return
-        }
+        if (isRegister) {
+            if (password.length < 6) {
+              setError('Password must be at least 6 characters')
+              return
+            }
+            if (password !== confirmPassword) {
+              setError('Passwords do not match')
+              return
+            }
+            // Check if an account already exists before attempting signup
+            try {
+              const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:5000'
+              const res = await fetch(`${API_URL}/api/auth/users/${encodeURIComponent(email)}/exists`)
+              if (res.ok) {
+                const payload = await res.json().catch(() => undefined as any)
+                if (payload?.exists === true) {
+                  setError('Account already exists. Please sign in or reset your password.')
+                  return
+                }
+              }
+            } catch {/* ignore existence check failures and fall back to sign up */}
+            const { error, userConfirmed } = await signUpMechanic(email, password)
+            if (error) {
+              setError(error)
+              return
+            }
         if (!userConfirmed) {
           setInfo('Check your email to confirm your account, then log in.')
         }
