@@ -1,9 +1,29 @@
-import  { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSupportOpen, setIsSupportOpen] = useState(false)
   const [isCompanyOpen, setIsCompanyOpen] = useState(false)
+  
+  const supportRef = useRef<HTMLDivElement>(null)
+  const companyRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (supportRef.current && !supportRef.current.contains(event.target as Node)) {
+        setIsSupportOpen(false)
+      }
+      if (companyRef.current && !companyRef.current.contains(event.target as Node)) {
+        setIsCompanyOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <header className="sticky top-0 z-40">
@@ -27,7 +47,7 @@ export default function Header() {
             </a>
             
             {/* Support Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={supportRef}>
               <button
                 onClick={() => {
                   setIsSupportOpen(!isSupportOpen)
@@ -49,7 +69,7 @@ export default function Header() {
             </div>
 
             {/* Company Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={companyRef}>
               <button
                 onClick={() => {
                   setIsCompanyOpen(!isCompanyOpen)
