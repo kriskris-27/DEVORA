@@ -95,6 +95,35 @@ export default function FindMechanics() {
 
   const mapCenter = useMemo<LatLng>(() => center ?? { lat: 20.5937, lng: 78.9629 }, [center])
 
+  // 🔄 Convert 24-hour time to 12-hour AM/PM format
+  const formatTimeToAMPM = (timeStr: string): string => {
+    if (!timeStr) return timeStr
+    
+    // Remove seconds if present (HH:MM:SS -> HH:MM)
+    const timeWithoutSeconds = timeStr.includes(':') && timeStr.split(':').length === 3 
+      ? timeStr.split(':').slice(0, 2).join(':')
+      : timeStr
+    
+    try {
+      // If already in AM/PM format, return as is
+      if (timeWithoutSeconds.includes('AM') || timeWithoutSeconds.includes('PM')) {
+        return timeWithoutSeconds
+      }
+      
+      // Parse HH:MM format
+      const [hours, minutes] = timeWithoutSeconds.split(':').map(Number)
+      const date = new Date()
+      date.setHours(hours, minutes || 0, 0)
+      
+      return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      })
+    } catch {
+      return timeStr
+    }
+  }
  
   // 🕒 Check if mechanic is currently available
 // ✅ Works for both "06:15:00", "6:15 PM", "15:02:00" etc.
@@ -247,7 +276,7 @@ function isMechanicAvailable(from: string, to: string): boolean {
                       <div className="font-semibold text-gray-800">{r.mechanic.name}</div>
                       <div className="flex items-center gap-2 text-xs">
                         <span>
-                          {r.mechanic.working_hours_from} – {r.mechanic.working_hours_to}
+                          {formatTimeToAMPM(r.mechanic.working_hours_from)} – {formatTimeToAMPM(r.mechanic.working_hours_to)}
                         </span>
                         {isMechanicAvailable(r.mechanic.working_hours_from, r.mechanic.working_hours_to) ? (
                           <span className="text-green-600 font-semibold">🟢 Open</span>
@@ -333,7 +362,7 @@ function isMechanicAvailable(from: string, to: string): boolean {
                 <div className="font-semibold text-lg sm:text-xl text-gray-800">{r.mechanic.name}</div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <span>
-                    {r.mechanic.working_hours_from} – {r.mechanic.working_hours_to}
+                    {formatTimeToAMPM(r.mechanic.working_hours_from)} – {formatTimeToAMPM(r.mechanic.working_hours_to)}
                   </span>
                   {isMechanicAvailable(r.mechanic.working_hours_from, r.mechanic.working_hours_to) ? (
                     <span className="text-green-600 font-semibold">🟢 Available</span>
@@ -410,3 +439,4 @@ function isMechanicAvailable(from: string, to: string): boolean {
     </div>
   )
 }
+
