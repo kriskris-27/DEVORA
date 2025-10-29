@@ -243,9 +243,9 @@ function isMechanicAvailable(from: string, to: string): boolean {
                   icon={markerIcon}
                 >
                   <Popup>
-                    <div className="text-sm space-y-1">
+                    <div className="text-sm space-y-2 min-w-[200px]">
                       <div className="font-semibold text-gray-800">{r.mechanic.name}</div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 text-xs">
                         <span>
                           {r.mechanic.working_hours_from} – {r.mechanic.working_hours_to}
                         </span>
@@ -255,8 +255,59 @@ function isMechanicAvailable(from: string, to: string): boolean {
                           <span className="text-red-600 font-semibold">🔴 Closed</span>
                         )}
                       </div>
-                      <div>{r.mechanic.phone}</div>
-                      <div>{r.distanceKm.toFixed(2)} km away</div>
+                      <div className="text-xs">{r.mechanic.phone}</div>
+                      <div className="text-xs text-gray-500">{r.distanceKm.toFixed(2)} km away</div>
+                      
+                      {/* Action Buttons */}
+                      <div className="flex flex-col gap-1.5 pt-2 border-t border-gray-200">
+                        <button
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-xs"
+                          onClick={() => window.location.href = `tel:${r.mechanic.phone}`}
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                          </svg>
+                          <span>Call</span>
+                        </button>
+                        
+                        <button
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 transition-colors text-xs"
+                          onClick={() => {
+                            const phoneNumber = r.mechanic.phone.replace(/[^0-9+]/g, '')
+                            window.open(`https://wa.me/${phoneNumber}`, '_blank')
+                          }}
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982a.394.394 0 01-.38-.55l.893-3.083a.395.395 0 01.09-.164c.045-.043.096-.083.148-.122.052-.04.105-.079.163-.111a.4.4 0 01.056-.024c-.175-.485-.298-.987-.363-1.493C1.993 7.825 1.992 5.928 2.59 4.17c.598-1.758 1.677-3.283 3.128-4.423.89-.698 1.909-1.224 3.018-1.562a.378.378 0 01.045-.011l.001-.001c4.973-1.259 10.323.202 13.842 3.723a13.247 13.247 0 013.175 15.082c-.445 1.037-.982 2.008-1.601 2.9l-.038.048c-.343.432-.71.834-1.092 1.21a.38.38 0 01-.067.061 12.734 12.734 0 01-1.787 1.306c-.014.01-.03.018-.043.027a.389.389 0 01-.026.015l-3.626 1.896a.413.413 0 01-.206.056"/>
+                          </svg>
+                          <span>WhatsApp</span>
+                        </button>
+                        
+                        <button
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 text-gray-700 hover:bg-gray-100 transition-colors text-xs"
+                          onClick={() => {
+                            const locationText = `${r.mechanic.name}\n${r.mechanic.phone}\nDistance: ${r.distanceKm.toFixed(2)} km`
+                            navigator.clipboard.writeText(locationText)
+                            alert('Information copied!')
+                          }}
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                          </svg>
+                          <span>Copy</span>
+                        </button>
+                        
+                        <button
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 text-blue-700 hover:bg-gray-100 transition-colors text-xs"
+                          onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${r.mechanic.location.lat},${r.mechanic.location.lng}`, '_blank')}
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                          </svg>
+                          <span>Navigate</span>
+                        </button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -274,7 +325,7 @@ function isMechanicAvailable(from: string, to: string): boolean {
             {filteredResults.map((r) => (
               <div
                 key={r.mechanic.email}
-                className={`border rounded-2xl p-4 sm:p-5 bg-white shadow hover:shadow-lg transition-all cursor-pointer ${
+                className={`border rounded-2xl p-4 sm:p-5 bg-white shadow hover:shadow-lg transition-all ${
                   selectedEmail === r.mechanic.email ? 'ring-2 ring-blue-400' : ''
                 }`}
                 onClick={() => setSelectedEmail(r.mechanic.email)}
@@ -292,6 +343,65 @@ function isMechanicAvailable(from: string, to: string): boolean {
                 </div>
                 <div className="text-sm text-gray-600">{r.mechanic.phone}</div>
                 <div className="text-xs text-gray-500">{r.distanceKm.toFixed(2)} km away</div>
+                
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2 mt-4 pt-3 border-t border-gray-200">
+                  <button
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.location.href = `tel:${r.mechanic.phone}`
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    <span className="text-sm font-medium">Call</span>
+                  </button>
+                  
+                  <button
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      const phoneNumber = r.mechanic.phone.replace(/[^0-9+]/g, '')
+                      window.open(`https://wa.me/${phoneNumber}`, '_blank')
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982a.394.394 0 01-.38-.55l.893-3.083a.395.395 0 01.09-.164c.045-.043.096-.083.148-.122.052-.04.105-.079.163-.111a.4.4 0 01.056-.024c-.175-.485-.298-.987-.363-1.493C1.993 7.825 1.992 5.928 2.59 4.17c.598-1.758 1.677-3.283 3.128-4.423.89-.698 1.909-1.224 3.018-1.562a.378.378 0 01.045-.011l.001-.001c4.973-1.259 10.323.202 13.842 3.723a13.247 13.247 0 013.175 15.082c-.445 1.037-.982 2.008-1.601 2.9l-.038.048c-.343.432-.71.834-1.092 1.21a.38.38 0 01-.067.061 12.734 12.734 0 01-1.787 1.306c-.014.01-.03.018-.043.027a.389.389 0 01-.026.015l-3.626 1.896a.413.413 0 01-.206.056"/>
+                    </svg>
+                    <span className="text-sm font-medium">WhatsApp</span>
+                  </button>
+                  
+                  <button
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      const locationText = `${r.mechanic.name}\n${r.mechanic.phone}\nDistance: ${r.distanceKm.toFixed(2)} km`
+                      navigator.clipboard.writeText(locationText)
+                      alert('Information copied!')
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    <span className="text-sm font-medium">Copy</span>
+                  </button>
+                  
+                  <button
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 text-blue-700 hover:bg-gray-100 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(`https://www.google.com/maps/dir/?api=1&destination=${r.mechanic.location.lat},${r.mechanic.location.lng}`, '_blank')
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span className="text-sm font-medium">Navigate</span>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
