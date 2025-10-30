@@ -15,6 +15,7 @@ import Grievance from "../pages/Grievance";
 import AppLayout from "../Layouts/AppLayout";
 import { ProtectedMechanicRoute } from "../App";
 import MechanicDashboard from "../pages/MechanicDashboard";
+import MechanicAssistant from "../pages/MechanicAssistant";
 import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
@@ -37,6 +38,7 @@ const AppRoutes = () => {
         <Route path="privacy" element={<Privacy />} />
         <Route path="partners" element={<Partners />} />
         <Route path="grievance" element={<Grievance />} />
+        <Route path="assistant" element={<MechanicAssistant />} />
       </Route>
 
       {/* Mechanic routes (protected + with layout) */}
@@ -50,6 +52,7 @@ const AppRoutes = () => {
       >
         <Route path="onboarding" element={<MechanicOnboarding />} />
         <Route path="dashboard" element={<MechanicDashboard />} />
+        
       </Route>
 
       {/* Fallback route */}

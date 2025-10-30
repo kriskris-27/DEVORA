@@ -2,6 +2,7 @@ import { BrowserRouter,Navigate } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import { AuthProvider, useAuth } from './auth/AuthProvider'
 import AppRoutes from './Routes/AppRoutes'
+import FloatingAssistantButton from './components/FloatingAssistantButton'
 // import MechanicAuth from './pages/MechanicAuth'
 // import MechanicDashboard from './pages/MechanicDashboard'
 // import MechanicOnboarding from './pages/MechanicOnboarding'
@@ -54,6 +55,7 @@ export default function App() {
         </Routes>
         <Footer /> */}
         <AppRoutes/>
+        <FloatingAssistantButton />
       </BrowserRouter>
     </AuthProvider>
   )
