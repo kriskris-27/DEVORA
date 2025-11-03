@@ -1,12 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSupportOpen, setIsSupportOpen] = useState(false)
   const [isCompanyOpen, setIsCompanyOpen] = useState(false)
+  const { pathname } = useLocation()
   
   const supportRef = useRef<HTMLDivElement>(null)
   const companyRef = useRef<HTMLDivElement>(null)
+  
+  // Hide Mechanic Portal button if already in mechanic portal
+  const isInMechanicPortal = pathname.startsWith('/mechanic')
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -91,12 +96,14 @@ export default function Header() {
               )}
             </div>
 
-            <a
-              href="/mechanic"
-              className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
-            >
-              Mechanic Portal
-            </a>
+            {!isInMechanicPortal && (
+              <a
+                href="/mechanic"
+                className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
+              >
+                Mechanic Portal
+              </a>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -154,13 +161,15 @@ export default function Header() {
               >
                 Blog
               </a>
-              <a
-                href="/mechanic"
-                className="block px-3 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Mechanic Portal
-              </a>
+              {!isInMechanicPortal && (
+                <a
+                  href="/mechanic"
+                  className="block px-3 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Mechanic Portal
+                </a>
+              )}
             </div>
           </div>
         )}
