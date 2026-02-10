@@ -17,48 +17,51 @@ import { ProtectedMechanicRoute } from "../App";
 import MechanicDashboard from "../pages/MechanicDashboard";
 import MechanicAssistant from "../pages/MechanicAssistant";
 import NotFound from "../pages/NotFound";
+import FloatingAssistantButton from "../components/FloatingAssistantButton";
 
 const AppRoutes = () => {
-  return (
-    <Routes>
-      {/* Public pages */}
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/mechanic" element={<MechanicAuth />} />
+    return (
+        <>
+            <FloatingAssistantButton />
+            <Routes>
+                {/* Public pages */}
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/mechanic" element={<MechanicAuth />} />
 
-      {/* Layout routes for general pages */}
-      <Route element={<AppLayout />}>
-        <Route path="find" element={<FindMechanics />} />
-        <Route path="support" element={<Support />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="faq" element={<FAQ />} />
-        <Route path="company" element={<Company />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="terms" element={<Terms />} />
-        <Route path="privacy" element={<Privacy />} />
-        <Route path="partners" element={<Partners />} />
-        <Route path="grievance" element={<Grievance />} />
-        <Route path="assistant" element={<MechanicAssistant />} />
-      </Route>
+                {/* Layout routes for general pages */}
+                <Route element={<AppLayout />}>
+                    <Route path="find" element={<FindMechanics />} />
+                    <Route path="support" element={<Support />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="faq" element={<FAQ />} />
+                    <Route path="company" element={<Company />} />
+                    <Route path="blog" element={<Blog />} />
+                    <Route path="terms" element={<Terms />} />
+                    <Route path="privacy" element={<Privacy />} />
+                    <Route path="partners" element={<Partners />} />
+                    <Route path="grievance" element={<Grievance />} />
+                    <Route path="assistant" element={<MechanicAssistant />} />
+                </Route>
 
-      {/* Mechanic routes (protected + with layout) */}
-      <Route
-        path="/mechanic"
-        element={
-          <ProtectedMechanicRoute>
-            <AppLayout />
-          </ProtectedMechanicRoute>
-        }
-      >
-        <Route path="onboarding" element={<MechanicOnboarding />} />
-        <Route path="dashboard" element={<MechanicDashboard />} />
-        
-      </Route>
+                {/* Mechanic routes (protected + with layout) */}
+                <Route
+                    path="/mechanic"
+                    element={
+                        <ProtectedMechanicRoute>
+                            <AppLayout />
+                        </ProtectedMechanicRoute>
+                    }
+                >
+                    <Route path="onboarding" element={<MechanicOnboarding />} />
+                    <Route path="dashboard" element={<MechanicDashboard />} />
+                </Route>
 
-      {/* Fallback route */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+                {/* Fallback route */}
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </>
+    );
 };
 
 export default AppRoutes;
