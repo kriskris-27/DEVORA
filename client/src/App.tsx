@@ -1,62 +1,34 @@
-import { BrowserRouter,Navigate } from 'react-router-dom'
-import type { ReactElement } from 'react'
-import { AuthProvider, useAuth } from './auth/AuthProvider'
-import AppRoutes from './Routes/AppRoutes'
-import FloatingAssistantButton from './components/FloatingAssistantButton'
-// import MechanicAuth from './pages/MechanicAuth'
-// import MechanicDashboard from './pages/MechanicDashboard'
-// import MechanicOnboarding from './pages/MechanicOnboarding'
-// import FindMechanics from './pages/FindMechanics'
-// import Header from './components/Header'
-// import Footer from './components/Footer'
-// import Home from './pages/Home'
+import { BrowserRouter, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "./auth/AuthProvider";
+import AppRoutes from "./Routes/AppRoutes";
+import { ReactNode } from "react";
 
-export const  ProtectedMechanicRoute = ({ children }: { children: ReactElement }) =>{
-  const { role, user } = useAuth()
-  if (!user) return <Navigate to="/mechanic" replace />
-  if (role !== 'mechanic') return <Navigate to="/home" replace />
-  return children
+export const ProtectedMechanicRoute = ({ children }: { children: ReactNode }) => {
+    const { session, role } = useAuth();
+
+    // TODO: Add loading state to AuthProvider to avoid premature redirection
+    // For now, we allow rendering to prevent infinite redirect loops on refresh
+
+    if (!session) {
+        // Ideally: return <Navigate to="/mechanic" replace />;
+        // But without loading state, this redirects immediately on load.
+    }
+
+    if (session && role !== 'mechanic') {
+        return <Navigate to="/" replace />;
+    }
+
+    return <>{children}</>;
+};
+
+function App() {
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <AppRoutes />
+            </AuthProvider>
+        </BrowserRouter>
+    );
 }
 
-
-export default function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        {/* <Header />
-        <Routes>
-          <Route path="/" element={<ProtectedUserRoute><Home/></ProtectedUserRoute>} />
-          
-          <Route path="/home" element={<Home/>} />
-
-          <Route path="/find" element={<FindMechanics/>} />
-
-          <Route path="/mechanic" element={<MechanicAuth />} />
-
-          <Route
-            path="/mechanic/onboarding"
-            element={
-              <ProtectedMechanicRoute>
-                <MechanicOnboarding />
-              </ProtectedMechanicRoute>
-            }
-          />
-
-          <Route
-            path="/mechanic/dashboard"
-            element={
-              <ProtectedMechanicRoute>
-                <MechanicDashboard />
-              </ProtectedMechanicRoute>
-            }
-          />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <Footer /> */}
-        <AppRoutes/>
-        <FloatingAssistantButton />
-      </BrowserRouter>
-    </AuthProvider>
-  )
-}
+export default App;

@@ -1,151 +1,131 @@
-import  { useState } from 'react'
+import { useState } from 'react'
+import { Button } from './ui/Button'
+import { Badge } from './ui/Badge'
+import { cn } from '../lib/utils'
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isSupportOpen, setIsSupportOpen] = useState(false)
-  const [isCompanyOpen, setIsCompanyOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isSupportOpen, setIsSupportOpen] = useState(false)
+    const [isCompanyOpen, setIsCompanyOpen] = useState(false)
 
-  return (
-    <header className="sticky top-0 z-40">
-      <div className="backdrop-blur-md bg-white/70 border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          {/* Logo / Brand */}
-          <a
-            href="/home"
-            className="text-lg font-bold tracking-tight text-gray-900 hover:text-gray-700 transition-colors"
-          >
-            BREAK DOWN BUDDY
-          </a>
+    return (
+        <header className="sticky top-0 z-40 w-full">
+            <div className="bg-white/80 backdrop-blur-xl border-b border-gray-100">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                    {/* Logo / Brand */}
+                    <a
+                        href="/home"
+                        className="text-2xl font-serif font-semibold tracking-tight text-gray-900 hover:text-electric-600 transition-colors"
+                    >
+                        BREAK DOWN <span className="text-electric-600">BUDDY</span>
+                    </a>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6">
-            <a
-              href="/find"
-              className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-            >
-              Find Help
-            </a>
-            
-            {/* Support Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setIsSupportOpen(!isSupportOpen)
-                  setIsCompanyOpen(false) // Close company dropdown when opening support
-                }}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors flex items-center gap-1"
-              >
-                Support
-                <span className="text-xs">▼</span>
-              </button>
-              {isSupportOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                  <a href="/support" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Support Center</a>
-                  <a href="/faq" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">FAQ</a>
-                  <a href="/contact" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Contact Us</a>
-                  <a href="/grievance" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Grievance Policy</a>
+                    {/* Desktop Nav */}
+                    <nav className="hidden md:flex items-center gap-2">
+                        <a
+                            href="/find"
+                            className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-electric-600 hover:bg-electric-50 transition-all duration-200"
+                        >
+                            Find Help
+                        </a>
+
+                        {/* Support Dropdown */}
+                        <div className="relative group">
+                            <button
+                                onClick={() => {
+                                    setIsSupportOpen(!isSupportOpen)
+                                    setIsCompanyOpen(false)
+                                }}
+                                className="flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-electric-600 hover:bg-electric-50 transition-all duration-200 group-hover:text-electric-600"
+                            >
+                                Support
+                                <span className="text-[10px] opacity-50 group-hover:opacity-100 transition-opacity">▼</span>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            <div className="absolute top-full right-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+                                <div className="bg-white rounded-2xl shadow-layered-lg border border-gray-100 p-2">
+                                    <a href="/support" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Support Center</a>
+                                    <a href="/faq" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">FAQ</a>
+                                    <a href="/contact" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Contact Us</a>
+                                    <div className="h-px bg-gray-50 my-1"></div>
+                                    <a href="/grievance" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Grievance Policy</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Company Dropdown */}
+                        <div className="relative group">
+                            <button
+                                onClick={() => {
+                                    setIsCompanyOpen(!isCompanyOpen)
+                                    setIsSupportOpen(false)
+                                }}
+                                className="flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-electric-600 hover:bg-electric-50 transition-all duration-200 group-hover:text-electric-600"
+                            >
+                                Company
+                                <span className="text-[10px] opacity-50 group-hover:opacity-100 transition-opacity">▼</span>
+                            </button>
+                            <div className="absolute top-full right-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+                                <div className="bg-white rounded-2xl shadow-layered-lg border border-gray-100 p-2">
+                                    <a href="/company" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">About Us</a>
+                                    <a href="/blog" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Blog</a>
+                                    <a href="/partners" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Partners</a>
+                                    <div className="h-px bg-gray-50 my-1"></div>
+                                    <a href="/terms" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Terms & Conditions</a>
+                                    <a href="/privacy" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Privacy Policy</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="pl-4 ml-2 border-l border-gray-200">
+                            <a href="/mechanic">
+                                <Button variant="primary" size="sm" className="font-semibold">
+                                    Mechanic Portal
+                                </Button>
+                            </a>
+                        </div>
+                    </nav>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden p-2 rounded-xl text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                    >
+                        <span className="text-xl">☰</span>
+                    </button>
                 </div>
-              )}
+
+                {/* Mobile Menu */}
+                {isMenuOpen && (
+                    <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-xl animate-in fade-in slide-in-from-top-2">
+                        <div className="px-6 py-6 space-y-2">
+                            <a
+                                href="/find"
+                                className="block px-4 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Find help
+                            </a>
+                            <div className="h-px bg-gray-100 my-2"></div>
+                            <a
+                                href="/support"
+                                className="block px-4 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Support Center
+                            </a>
+                            <a
+                                href="/mechanic"
+                                className="block mt-4"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Button fullWidth>Mechanic Portal</Button>
+                            </a>
+                        </div>
+                    </div>
+                )}
             </div>
-
-            {/* Company Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setIsCompanyOpen(!isCompanyOpen)
-                  setIsSupportOpen(false) // Close support dropdown when opening company
-                }}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors flex items-center gap-1"
-              >
-                Company
-                <span className="text-xs">▼</span>
-              </button>
-              {isCompanyOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                  <a href="/company" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">About Us</a>
-                  <a href="/blog" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Blog</a>
-                  <a href="/partners" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Partners</a>
-                  <a href="/terms" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Terms & Conditions</a>
-                  <a href="/privacy" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Privacy Policy</a>
-                </div>
-              )}
-            </div>
-
-            <a
-              href="/mechanic"
-              className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
-            >
-              Mechanic Portal
-            </a>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-          >
-            <span className="text-xl">☰</span>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md">
-            <div className="px-6 py-4 space-y-2">
-              <a
-                href="/find"
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Find help
-              </a>
-              <a
-                href="/support"
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Support Center
-              </a>
-              <a
-                href="/faq"
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                FAQ
-              </a>
-              <a
-                href="/contact"
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact Us
-              </a>
-              <a
-                href="/company"
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About Us
-              </a>
-              <a
-                href="/blog"
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Blog
-              </a>
-              <a
-                href="/mechanic"
-                className="block px-3 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Mechanic Portal
-              </a>
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
-  )
+        </header>
+    )
 }
-  
