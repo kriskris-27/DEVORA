@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./auth/AuthProvider";
 import AppRoutes from "./Routes/AppRoutes";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export const ProtectedMechanicRoute = ({ children }: { children: ReactNode }) => {
     const { session, role } = useAuth();

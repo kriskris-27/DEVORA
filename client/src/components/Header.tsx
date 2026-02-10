@@ -1,12 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Button } from './ui/Button'
-import { Badge } from './ui/Badge'
-import { cn } from '../lib/utils'
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isSupportOpen, setIsSupportOpen] = useState(false)
     const [isCompanyOpen, setIsCompanyOpen] = useState(false)
+    const { pathname } = useLocation()
+
+    const supportRef = useRef<HTMLDivElement>(null)
+    const companyRef = useRef<HTMLDivElement>(null)
+
+    // Hide Mechanic Portal button if already in mechanic portal
+    const isInMechanicPortal = pathname.startsWith('/mechanic')
+
+    // Close dropdowns when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (supportRef.current && !supportRef.current.contains(event.target as Node)) {
+                setIsSupportOpen(false)
+            }
+            if (companyRef.current && !companyRef.current.contains(event.target as Node)) {
+                setIsCompanyOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
 
     return (
         <header className="sticky top-0 z-40 w-full">
@@ -30,7 +53,7 @@ export default function Header() {
                         </a>
 
                         {/* Support Dropdown */}
-                        <div className="relative group">
+                        <div className="relative group" ref={supportRef}>
                             <button
                                 onClick={() => {
                                     setIsSupportOpen(!isSupportOpen)
@@ -43,7 +66,7 @@ export default function Header() {
                             </button>
 
                             {/* Dropdown Menu */}
-                            <div className="absolute top-full right-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+                            <div className={`absolute top-full right-0 pt-2 w-56 transition-all duration-200 transform origin-top-right ${isSupportOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                 <div className="bg-white rounded-2xl shadow-layered-lg border border-gray-100 p-2">
                                     <a href="/support" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Support Center</a>
                                     <a href="/faq" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">FAQ</a>
@@ -55,7 +78,7 @@ export default function Header() {
                         </div>
 
                         {/* Company Dropdown */}
-                        <div className="relative group">
+                        <div className="relative group" ref={companyRef}>
                             <button
                                 onClick={() => {
                                     setIsCompanyOpen(!isCompanyOpen)
@@ -66,7 +89,7 @@ export default function Header() {
                                 Company
                                 <span className="text-[10px] opacity-50 group-hover:opacity-100 transition-opacity">▼</span>
                             </button>
-                            <div className="absolute top-full right-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+                            <div className={`absolute top-full right-0 pt-2 w-56 transition-all duration-200 transform origin-top-right ${isCompanyOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                 <div className="bg-white rounded-2xl shadow-layered-lg border border-gray-100 p-2">
                                     <a href="/company" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">About Us</a>
                                     <a href="/blog" className="block px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:text-electric-700 hover:bg-electric-50 transition-colors">Blog</a>
@@ -78,13 +101,15 @@ export default function Header() {
                             </div>
                         </div>
 
-                        <div className="pl-4 ml-2 border-l border-gray-200">
-                            <a href="/mechanic">
-                                <Button variant="primary" size="sm" className="font-semibold">
-                                    Mechanic Portal
-                                </Button>
-                            </a>
-                        </div>
+                        {!isInMechanicPortal && (
+                            <div className="pl-4 ml-2 border-l border-gray-200">
+                                <a href="/mechanic">
+                                    <Button variant="primary" size="sm" className="font-semibold">
+                                        Mechanic Portal
+                                    </Button>
+                                </a>
+                            </div>
+                        )}
                     </nav>
 
                     {/* Mobile Menu Button */}
@@ -115,13 +140,15 @@ export default function Header() {
                             >
                                 Support Center
                             </a>
-                            <a
-                                href="/mechanic"
-                                className="block mt-4"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                <Button fullWidth>Mechanic Portal</Button>
-                            </a>
+                            {!isInMechanicPortal && (
+                                <a
+                                    href="/mechanic"
+                                    className="block mt-4"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <Button fullWidth>Mechanic Portal</Button>
+                                </a>
+                            )}
                         </div>
                     </div>
                 )}

@@ -117,7 +117,6 @@ export default function FindMechanics() {
         if (!ratingMechanic || userRating === 0) return
         setRatingSubmitting(true)
         try {
-            // Get or create a simple device ID for anonymous rate limiting
             let deviceId = localStorage.getItem('device_id')
             if (!deviceId) {
                 deviceId = Math.random().toString(36).slice(2) + Date.now().toString(36)
@@ -146,25 +145,20 @@ export default function FindMechanics() {
         }
     }
 
-
     // 🕒 Check if mechanic is currently available
-    // ✅ Works for both "06:15:00", "6:15 PM", "15:02:00" etc.
     function isMechanicAvailable(from: string, to: string): boolean {
         if (!from || !to) return false;
 
         const now = new Date();
 
-        // 🕓 Parse time to 24-hour format safely
         const parseTime = (timeStr: string): number => {
             timeStr = timeStr.trim().toUpperCase();
 
-            // If AM/PM present, use Date parsing
             if (timeStr.includes("AM") || timeStr.includes("PM")) {
                 const date = new Date(`1970-01-01T${timeStr.replace(" ", "")}`);
                 return isNaN(date.getTime()) ? 0 : date.getHours() * 3600 + date.getMinutes() * 60;
             }
 
-            // If plain HH:mm:ss — treat as 24-hour
             const parts = timeStr.split(":").map(Number);
             const [h, m = 0, s = 0] = parts;
             return h * 3600 + m * 60 + s;
@@ -172,19 +166,14 @@ export default function FindMechanics() {
 
         const fromSecs = parseTime(from);
         const toSecs = parseTime(to);
-
         const nowSecs = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
 
-        // 🧠 Handle shift that spans midnight (like 22:00–06:00)
         if (toSecs < fromSecs) {
-            // If it's after 'from' (late night) or before 'to' (early morning)
             return nowSecs >= fromSecs || nowSecs <= toSecs;
         }
 
-        // Normal case (same-day interval)
         return nowSecs >= fromSecs && nowSecs <= toSecs;
     }
-
 
     // ⚙️ Filter mechanics by availability & vehicle type
     const filteredResults = useMemo(() => {
@@ -249,13 +238,9 @@ export default function FindMechanics() {
                         <h1 className="text-2xl font-serif font-bold text-gray-900">Find Mechanics</h1>
                     </div>
 
-                    {/* Controls */}
                     <div className="space-y-4">
-                        {/* Radius Select */}
                         <div className="space-y-2">
-                            <div className="flex items-center justify-between mb-1">
-                                <label className="text-sm font-medium text-gray-700">Search Radius (km)</label>
-                            </div>
+                            <label className="text-sm font-medium text-gray-700">Search Radius (km)</label>
                             <div className="flex gap-2 h-9">
                                 {[5, 10, 20].map((n) => (
                                     <button
@@ -266,28 +251,27 @@ export default function FindMechanics() {
                                             : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                                             }`}
                                     >
-                                        {n}
+                                        {n} km
                                     </button>
                                 ))}
-                                <div className="relative w-20 group">
+                                <div className="relative w-24">
                                     <input
                                         type="number"
                                         min="1"
                                         max="500"
                                         value={radiusKm}
                                         onChange={(e) => setRadiusKm(Number(e.target.value))}
-                                        className="w-full h-full px-2 text-sm text-center font-medium text-gray-700 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-500 focus:border-transparent transition-all group-hover:border-gray-300"
-                                        placeholder="..."
+                                        className="w-full h-full px-2 text-sm text-center font-medium text-gray-700 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-500 transition-all"
+                                        placeholder="Radius"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        {/* Filters Row 2: Vehicle Type & Available */}
                         <div className="flex items-center gap-2">
                             <div className="flex-1">
                                 <select
-                                    className="select select-sm select-bordered w-full text-xs"
+                                    className="w-full h-9 px-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-electric-500 bg-white"
                                     value={selectedVehicleType || ""}
                                     onChange={(e) => setSelectedVehicleType(e.target.value || null)}
                                 >
@@ -307,7 +291,7 @@ export default function FindMechanics() {
                                     />
                                     <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-electric-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-electric-600"></div>
                                 </div>
-                                <span className="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-colors">Open Now</span>
+                                <span className="text-xs font-medium text-gray-600 group-hover:text-gray-900">Open Now</span>
                             </label>
                         </div>
 
@@ -316,12 +300,7 @@ export default function FindMechanics() {
                             disabled={!center || loading}
                             className="w-full shadow-lg shadow-electric-500/20"
                         >
-                            {loading ? (
-                                <>
-                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                    Searching...
-                                </>
-                            ) : 'Search Area'}
+                            {loading ? 'Searching...' : 'Search Area'}
                         </Button>
 
                         {error && (
@@ -353,20 +332,16 @@ export default function FindMechanics() {
                                 className={`p-4 transition-all duration-200 cursor-pointer border ${selectedEmail === r.mechanic.email ? 'border-electric-500 ring-1 ring-electric-500 shadow-md' : 'border-gray-100 hover:border-gray-200'}`}
                                 onClick={() => setSelectedEmail(r.mechanic.email)}
                             >
-                                {/* Tags Row */}
                                 <div className="flex flex-wrap gap-1 mb-2">
-                                    {/* Vehicle Types */}
                                     {r.mechanic.vehicleTypes?.map(type => (
-                                        <span key={type} className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">
+                                        <Badge key={type} variant="secondary" className="px-1.5 py-0 text-[10px]">
                                             {type}
-                                        </span>
+                                        </Badge>
                                     ))}
-                                    {/* Rating Tag */}
                                     {r.mechanic.rating && (
-                                        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
-                                            <svg className="w-3 h-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                                            {r.mechanic.rating} <span className="text-yellow-600/70">({r.mechanic.reviewCount})</span>
-                                        </span>
+                                        <Badge variant="outline" className="px-1.5 py-0 text-[10px] bg-yellow-50 text-yellow-700 border-yellow-200">
+                                            ★ {r.mechanic.rating} ({r.mechanic.reviewCount})
+                                        </Badge>
                                     )}
                                 </div>
 
@@ -392,45 +367,44 @@ export default function FindMechanics() {
                                     </Badge>
                                 </div>
 
-                                <div className="flex items-center gap-2 mt-4 pt-3 border-t border-gray-50">
+                                <div className="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100">
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="h-8 text-xs px-2 border-gray-200 text-gray-600 hover:text-yellow-600 hover:border-yellow-200 hover:bg-yellow-50"
+                                        className="h-8 text-xs flex-1"
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             handleRateClick(r.mechanic)
                                         }}
-                                        title="Rate this mechanic"
                                     >
-                                        <span className="mr-1">★</span> Rate
+                                        ★ Rate
                                     </Button>
                                     <a
                                         href={`tel:${r.mechanic.phone}`}
                                         onClick={(e) => e.stopPropagation()}
                                         className="flex-1"
                                     >
-                                        <Button variant="outline" size="sm" className="w-full h-8 text-xs gap-1.5 border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50">
-                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                        <Button variant="outline" size="sm" className="w-full h-8 text-xs gap-1.5 active:bg-blue-50">
                                             Call
                                         </Button>
                                     </a>
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="h-8 text-xs px-2 border-gray-200 text-gray-600 hover:text-green-600 hover:border-green-100 hover:bg-green-50"
+                                        className="h-8 text-xs px-2"
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             const phoneNumber = r.mechanic.phone.replace(/[^0-9+]/g, '')
                                             window.open(`https://wa.me/${phoneNumber}`, '_blank')
                                         }}
+                                        title="WhatsApp"
                                     >
-                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982a.394.394 0 01-.38-.55l.893-3.083a.395.395 0 01.09-.164c.045-.043.096-.083.148-.122.052-.04.105-.079.163-.111a.4.4 0 01.056-.024c-.175-.485-.298-.987-.363-1.493C1.993 7.825 1.992 5.928 2.59 4.17c.598-1.758 1.677-3.283 3.128-4.423.89-.698 1.909-1.224 3.018-1.562a.378.378 0 01.045-.011l.001-.001c4.973-1.259 10.323.202 13.842 3.723a13.247 13.247 0 013.175 15.082c-.445 1.037-.982 2.008-1.601 2.9l-.038.048c-.343.432-.71.834-1.092 1.21a.38.38 0 01-.067.061 12.734 12.734 0 01-1.787 1.306c-.014.01-.03.018-.043.027a.389.389 0 01-.026.015l-3.626 1.896a.413.413 0 01-.206.056" /></svg>
+                                        <svg className="w-4 h-4 fill-green-600" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982a.394.394 0 01-.38-.55l.893-3.083a.395.395 0 01.09-.164c.045-.043.096-.083.148-.122.052-.04.105-.079.163-.111a.4.4 0 01.056-.024c-.175-.485-.298-.987-.363-1.493C1.993 7.825 1.992 5.928 2.59 4.17c.598-1.758 1.677-3.283 3.128-4.423.89-.698 1.909-1.224 3.018-1.562a.378.378 0 01.045-.011l.001-.001c4.973-1.259 10.323.202 13.842 3.723a13.247 13.247 0 013.175 15.082c-.445 1.037-.982 2.008-1.601 2.9l-.038.048c-.343.432-.71.834-1.092 1.21a.38.38 0 01-.067.061 12.734 12.734 0 01-1.787 1.306c-.014.01-.03.018-.043.027a.389.389 0 01-.026.015l-3.626 1.896a.413.413 0 01-.206.056" /></svg>
                                     </Button>
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="h-8 text-xs px-2 border-gray-200 text-gray-600 hover:text-electric-600 hover:border-electric-100 hover:bg-electric-50"
+                                        className="h-8 text-xs px-2"
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             window.open(`https://www.google.com/maps/dir/?api=1&destination=${r.mechanic.location.lat},${r.mechanic.location.lng}`, '_blank')
@@ -444,7 +418,6 @@ export default function FindMechanics() {
                     })}
                 </div>
 
-                {/* Offline Hint */}
                 {offlineHint && (
                     <div className="p-3 bg-yellow-50 text-yellow-800 text-xs text-center border-t border-yellow-100">
                         {offlineHint}
@@ -468,9 +441,7 @@ export default function FindMechanics() {
                     {center && (
                         <Marker position={[center.lat, center.lng]} icon={userMarkerIcon}>
                             <Popup>
-                                <div className="text-center">
-                                    <span className="font-semibold text-gray-900">You are here</span>
-                                </div>
+                                <div className="text-center font-semibold text-gray-900">You are here</div>
                             </Popup>
                         </Marker>
                     )}
@@ -481,21 +452,19 @@ export default function FindMechanics() {
                             position={[r.mechanic.location.lat, r.mechanic.location.lng]}
                             icon={markerIcon}
                         >
-                            <Popup className="custom-popup">
+                            <Popup>
                                 <div className="p-1 min-w-[200px]">
-                                    <div className="flex justify-between items-start">
-                                        <div className="font-bold text-gray-900 text-base mb-1">{r.mechanic.name}</div>
+                                    <div className="flex justify-between items-start mb-1">
+                                        <div className="font-bold text-gray-900 text-base">{r.mechanic.name}</div>
                                         {r.mechanic.rating && (
-                                            <div className="flex items-center gap-0.5 text-xs font-semibold text-yellow-600">
-                                                <span>★</span> {r.mechanic.rating}
-                                            </div>
+                                            <div className="text-xs font-semibold text-yellow-600">★ {r.mechanic.rating}</div>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2 text-xs mb-2">
                                         {isMechanicAvailable(r.mechanic.working_hours_from, r.mechanic.working_hours_to) ? (
-                                            <span className="text-green-600 bg-green-50 px-1.5 py-0.5 rounded font-medium">Available</span>
+                                            <span className="text-green-600 font-medium">Available</span>
                                         ) : (
-                                            <span className="text-red-600 bg-red-50 px-1.5 py-0.5 rounded font-medium">Closed</span>
+                                            <span className="text-red-600 font-medium">Closed</span>
                                         )}
                                         <span className="text-gray-500">{r.distanceKm.toFixed(1)} km</span>
                                     </div>
@@ -507,23 +476,6 @@ export default function FindMechanics() {
                         </Marker>
                     ))}
                 </MapContainer>
-
-                {/* Locate Me Floating Button (Desktop) */}
-                <div className="absolute bottom-6 right-6 z-[1000] hidden md:block">
-                    <button
-                        className="bg-white p-3 rounded-full shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all text-gray-700"
-                        onClick={() => {
-                            navigator.geolocation.getCurrentPosition(
-                                (pos) => setCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                                () => setError('Could not locate you'),
-                                { enableHighAccuracy: true }
-                            )
-                        }}
-                        title="Locate Me"
-                    >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    </button>
-                </div>
             </div>
         </div>
     )
